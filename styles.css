@@ -212,3 +212,34 @@ button{
 #wizard {
   display: none;
 }
+/* === Welcome → Wizard cross-fade === */
+.welcome,
+#wizard {
+  transition: opacity .5s ease, transform .5s ease;
+  will-change: opacity, transform;
+}
+
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+}
+
+/* ensure visible state */
+.welcome:not(.is-hidden),
+#wizard:not(.is-hidden) {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Remove any old hard hide rule */
+#wizard { /* if you had display:none earlier, override it */
+  display: block !important;
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .welcome, #wizard { transition: none !important; transform: none !important; }
+}
