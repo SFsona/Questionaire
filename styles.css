@@ -119,3 +119,45 @@ td:last-child, th:last-child{ text-align:right; }
 .fadein{ opacity:0; transform: translateY(4px); animation: fadeIn .6s ease forwards; }
 .fadein-delayed{ opacity:0; transform: translateY(6px); animation: fadeIn .8s ease forwards; animation-delay: .3s; }
 @keyframes fadeIn{ to{ opacity:1; transform: translateY(0); } }
+
+/* === SONA requested style refinements (append to end of styles.css) === */
+
+/* 1) Remove the 'box' around the questionnaire (keep layout/positioning) */
+.wizard{
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* 2) Centre the main header title and sub */
+.header{
+  justify-content: center !important;
+}
+.header > div{
+  text-align: center !important;
+}
+
+/* 3) q-title: use lighter weight Plantin (regular/medium instead of bold) */
+.q-title{
+  font-weight: 500;              /* try 400 if you prefer even lighter */
+  letter-spacing: 0.1px;
+  margin-bottom: 16px;           /* 4) a touch more space before q-help */
+}
+
+/* 4) Slightly increase spacing between q-title and q-help */
+.q-help{
+  margin-top: 6px;
+}
+
+/* 5) Back / Next buttons: Plantin MT regular */
+button{
+  font-family: var(--font);
+  font-weight: 400;              /* regular */
+}
+
+/* Optional: soften any residual outlines that came from the wizard shell */
+.progress{
+  border-bottom: none;
+  background: transparent;
+}
