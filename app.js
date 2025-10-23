@@ -1,13 +1,20 @@
 // app.js — safe (no template strings), robust nav + full estimate
 document.addEventListener("DOMContentLoaded", function () {
 
-  // --- Welcome screen logic ---
+ // --- Welcome screen logic (cross-fade) ---
 var btnStart = document.getElementById("btnStart");
 if (btnStart) {
-  btnStart.addEventListener("click", function() {
-    document.getElementById("welcome").style.display = "none";
-    document.getElementById("wizard").style.display = "block";
+  btnStart.addEventListener("click", function () {
+    var welcome = document.getElementById("welcome");
+    var wizard  = document.getElementById("wizard");
+    if (!welcome || !wizard) return;
+
+    // hide welcome, show wizard (they'll cross-fade via CSS)
+    welcome.classList.add("is-hidden");
+    wizard.classList.remove("is-hidden");
   });
+}
+
 }  // Boot flag so we can tell it loaded
   window.SONA_BOOTSTRAPPED = true;
 
