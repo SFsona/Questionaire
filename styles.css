@@ -92,6 +92,7 @@ html, body {
 .welcome .title {
   font-family: var(--font-light);
   font-weight: 300;
+   font-style: italic;
   font-size: clamp(30px, 3vw, 46px);
   margin-bottom: 16px;
 }
@@ -104,8 +105,9 @@ html, body {
   line-height: 1.5;
 }
 .start-btn {
-  font-family: var(--font-semibold);
+  font-family: var(--font-regular);
   font-weight: 600;
+   font-style: italic;
   background: transparent;
   color: var(--ink);
   border: 1px solid var(--line);
