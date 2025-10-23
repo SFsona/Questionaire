@@ -1,6 +1,6 @@
 /* ===============================
    GLOBAL STYLES – SONA Calculator
-   (Option 2: fully centered layout)
+   (Option 1: balanced centering + scroll)
    =============================== */
 
 /* Variables */
@@ -14,7 +14,7 @@
   /* Adobe Plantin family from your kit */
   --font-plantin: "plantin", serif;
 
-  /* Plantin variants (all under 'plantin', controlled by weight/style) */
+  /* Variants (Plantin weights & styles) */
   --font-light: var(--font-plantin);
   --font-light-italic: var(--font-plantin);
   --font-regular: var(--font-plantin);
@@ -24,38 +24,37 @@
   --font-bold: var(--font-plantin);
   --font-bold-italic: var(--font-plantin);
 
-  /* default */
   --font: var(--font-regular);
 }
 
-/* Fully centered viewport container */
+/* Base Layout */
 html, body {
-  height: 100%;
   margin: 0;
-  background: var(--bg-gradient);
-  color: var(--ink);
+  padding: 0;
+  height: 100%;
   font-family: var(--font);
   font-weight: 400;
-
-  /* Option 2 centering */
+  color: var(--ink);
+  background: var(--bg-gradient);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-
-  /* Prevent stray x-scrollbars */
+  justify-content: flex-start;
   overflow-x: hidden;
 }
 
-/* Main wrapper sits in the centered viewport */
+/* Wrapper (centers content, scrolls gracefully if tall) */
 .wrap {
-  width: 100%;
-  max-width: 720px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 40px 20px;
-  text-align: center;
   box-sizing: border-box;
 }
 
-/* Welcome + Wizard cross-fade (no layout shift) */
+/* Fade transitions for welcome + wizard */
 .welcome,
 #wizard {
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -110,7 +109,7 @@ html, body {
   transform: translateY(-1px);
 }
 
-/* Wizard shell (clean, no box) */
+/* Wizard */
 .wizard {
   width: 100%;
   max-width: 720px;
@@ -127,12 +126,12 @@ html, body {
   color: var(--muted);
 }
 
-/* Steps — one question at a time with soft fade */
-.step { 
+/* Step visibility + transitions */
+.step {
   display: none;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .step.active {
   display: block;
@@ -146,7 +145,6 @@ html, body {
   font-size: clamp(22px, 2.5vw, 30px);
   margin-bottom: 18px;
 }
-
 .q-help {
   font-family: var(--font-regular);
   font-weight: 400;
@@ -156,7 +154,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-/* Fields / options */
+/* Fields */
 .field {
   display: inline-flex;
   align-items: center;
@@ -241,8 +239,19 @@ button:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px);
 button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* Summary */
-.summary { max-width: 800px; text-align: left; color: var(--ink); margin: 0 auto; }
-.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
+.summary {
+  max-width: 800px;
+  text-align: left;
+  color: var(--ink);
+  margin: 0 auto;
+}
+.kpis {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 .kpi { flex: 1 1 240px; }
 .kpi .lab {
   font-family: var(--font-regular);
@@ -258,7 +267,11 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
 }
 
 table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-table th, table td { border-bottom: 1px solid var(--line); padding: 8px 0; text-align: left; }
+table th, table td {
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+  text-align: left;
+}
 table th {
   font-family: var(--font-semibold);
   font-weight: 600;
