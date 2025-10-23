@@ -15,7 +15,7 @@ if (btnStart) {
   });
 }
 
-}  // Boot flag so we can tell it loaded
+// Boot flag so we can tell it loaded
   window.SONA_BOOTSTRAPPED = true;
 
   var DEFAULTS = window.SONA_DEFAULTS || {};
