@@ -744,7 +744,7 @@ input[type="number"] {
 /* 4) Make the table’s inner padding match other blocks (so edges line up) */
 #tblSys th,
 #tblSys td {
-  padding: 10px 16px;       /* 16px matches common content padding */
+  padding-left: 1px;       /* 16px matches common content padding */
   border-bottom: 1px solid rgba(255,255,255,0.15);
   text-align: left;
   vertical-align: middle;
@@ -754,8 +754,8 @@ input[type="number"] {
 /* 5) Ensure KPI and note blocks use the same inner padding for perfect visual alignment */
 .summary .kpis,
 .summary .note {
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 1px;
+  padding-right: 1px;
   box-sizing: border-box;
 }
 /* ===========================================
