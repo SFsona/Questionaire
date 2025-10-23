@@ -1,6 +1,7 @@
 // app.js — safe (no template strings), robust nav + full estimate
 document.addEventListener("DOMContentLoaded", function () {
-// --- Welcome screen logic ---
+
+  // --- Welcome screen logic ---
 var btnStart = document.getElementById("btnStart");
 if (btnStart) {
   btnStart.addEventListener("click", function() {
