@@ -362,3 +362,49 @@ table td {
   margin-left: auto;
   margin-right: auto;
 }
+/* ===========================================
+   SONA Logo — Responsive + elegant animation
+   =========================================== */
+
+.sona-logo {
+  width: clamp(140px, 18vw, 220px);   /* fluid scaling with viewport */
+  height: auto;
+  display: block;
+  margin: 0 auto 28px auto;           /* centers logo + adds spacing below */
+  opacity: 0.9;                       /* subtle integration with gradient background */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));  /* gentle glow for contrast */
+}
+
+/* Smooth reveal when the welcome screen fades in */
+.welcome:not(.is-hidden) .sona-logo {
+  animation: logoFadeIn 1.2s ease forwards;
+}
+
+@keyframes logoFadeIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 0.9; transform: translateY(0) scale(1); }
+}
+
+/* Hover or focus interaction */
+.sona-logo:hover,
+.sona-logo:focus {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Smaller screens (e.g., mobile phones) */
+@media (max-width: 600px) {
+  .sona-logo {
+    width: clamp(120px, 40vw, 160px);
+    margin-bottom: 22px;
+  }
+}
+
+/* Larger screens (desktop + 4K displays) */
+@media (min-width: 1400px) {
+  .sona-logo {
+    width: 240px;
+    margin-bottom: 36px;
+  }
+}
