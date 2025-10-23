@@ -20,7 +20,7 @@
         <img src="SONA-icon_(Trans150x110mm@300dpi)_White.png" alt="SONA logo" class="sona-logo">
         <div class="title">Home Technology Budget Calculator</div>
         <div class="sub">
-          Every SONA system is bespoke, individually crafted to suit your specific aspirations and how you'd like to live at home.<br/><br/>We've found it useful, at the initial stages of a project to be able to give you some estimate costs based on a simple questionaire, and using data from other projects to provide initial guidance for you.
+          <br/>Every SONA system is bespoke, individually crafted to suit your specific aspirations and how you'd like to live at home.<br/><br/>We've found it useful, at the initial stages of a project to be able to give you some estimate costs based on a simple questionaire, and using data from other projects to provide initial guidance for you.
         </div>
         <button id="btnStart" class="start-btn">Begin</button>
       </div>
@@ -35,7 +35,7 @@
       <!-- Step 1 -->
       <div class="step active" data-step="1">
         <div class="q-title">Property size</div>
-        <div class="q-help">Please tell us the approximate overall size of your property.<br/>This helps us estimate the required infrastructure cabling and calculate an estimate for WiFi points.</div>
+        <div class="q-help"><br/>Please tell us the approximate overall size of your property.<br/>This helps us estimate the required infrastructure cabling and calculate an estimate for WiFi points.</div>
         <div class="field two">
           <input type="number" id="sizeValue" min="20" step="1" placeholder="e.g. 250">
           <select id="sizeUnit">
@@ -49,35 +49,35 @@
       <!-- Step 2 -->
       <div class="step" data-step="2">
         <div class="q-title">Bedrooms</div>
-        <div class="q-help">How many bedrooms does the property have?</div>
+        <div class="q-help"><br/>How many bedrooms does the property have?</div>
         <div class="field"><input type="number" id="bedrooms" min="1" step="1" placeholder="e.g. 4"></div>
       </div>
 
       <!-- Step 3 -->
       <div class="step" data-step="3">
         <div class="q-title">Additional Entertaining &amp; Living Spaces</div>
-        <div class="q-help">Beyond your main living spaces (eg. kitchen, living room, dining room),<br/> how many other entertaining or leisure areas are there (eg. gym, pool, spa, games room, bar)?</div>
+        <div class="q-help"><br/>Beyond your main living spaces<br/>(eg. kitchen, living room, dining room),<br/><br/> how many other entertaining or leisure areas are there<br/>(eg. gym, pool, spa, games room, bar)?</div>
         <div class="field"><input type="number" id="leisure" min="0" step="1" placeholder="e.g. 2"></div>
       </div>
 
       <!-- Step 4 -->
       <div class="step" data-step="4">
         <div class="q-title">Access &amp; Intercom</div>
-        <div class="q-help">We recommend audio only intercom points for secondary access locations such as utility areas or back doors.<br/>This type of location would allow you to communicate with a caller, without any visual.<br/>Please tell us how many audio-only locations (if any).</div>
+        <div class="q-help"><br/>We recommend audio only intercom points for secondary access locations such as utility areas or back doors.<br/>This type of location would allow you to communicate with a caller, without any visual.<br/>Please tell us how many audio-only locations (if any).</div>
         <div class="field"><input type="number" id="entryAudio" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 5 -->
       <div class="step" data-step="5">
         <div class="q-title">Access &amp; Intercom</div>
-        <div class="q-help">For main gates, and primary entrances, we recommend audio &amp; video points so that you can both communicate with and see callers.<br/>Please tell us how many audio &amp; video entry locations you would like.</div>
+        <div class="q-help"><br/>For main gates, and primary entrances, we recommend audio &amp; video points so that you can both communicate with and see callers.<br/>Please tell us how many audio &amp; video entry locations you would like.</div>
         <div class="field"><input type="number" id="entryAV" min="0" step="1" value="1"></div>
       </div>
 
       <!-- Step 6 -->
       <div class="step" data-step="6">
         <div class="q-title">Lighting Control</div>
-        <div class="q-help">If you've toured the SONA Studio, then you've witnessed how lighting control can transform spaces and provide both practical function and incredible mood and atmosphere.<br/>Please tell us if you don't want any lighting control, if you'd like lighting control across the entire property, or if you'd just like it in your main living &amp; entertainment spaces &amp; master bedroom or primary suite.</div>
+        <div class="q-help"><br/>If you've toured the SONA Studio, then you've witnessed how lighting control can transform spaces and provide both practical function and incredible mood and atmosphere.<br/>Please tell us if you don't want any lighting control, if you'd like lighting control across the entire property, or if you'd just like it in your main living &amp; entertainment spaces &amp; master bedroom or primary suite.</div>
         <div class="opt-list">
           <label class="opt"><input type="radio" name="lightingScope" value="none"> Not required</label>label>
           <label class="opt"><input type="radio" name="lightingScope" value="entire" checked> Throughout the entire property</label>
@@ -88,7 +88,7 @@
       <!-- Step 7 -->
       <div class="step" data-step="7">
         <div class="q-title">High Quality Architectural Lighting</div>
-        <div class="q-help">How many rooms would you like to include?</div>
+        <div class="q-help"><br/>How many rooms would you like to include?</div>
         <div class="field"><input type="number" id="archFittingsRooms" min="0" step="1" value="0"></div>
         <label class="opt" style="margin-top:10px; display:inline-flex;">
           <input type="checkbox" id="archAll"> All rooms (we’ll estimate)
@@ -98,7 +98,7 @@
       <!-- Step 8 -->
       <div class="step" data-step="8">
         <div class="q-title">Motorised Shading</div>
-        <div class="q-help">How many window treatments would you like to automate?</div>
+        <div class="q-help"><br/>How many window treatments would you like to automate?</div>
         <div class="field"><input type="number" id="shades" min="0" step="1" value="0"></div>
         <div class="q-help" style="margin-top:8px;">Include curtains, blinds and skylights. Count each shade individually.</div>
       </div>
@@ -106,49 +106,49 @@
       <!-- Step 9 -->
       <div class="step" data-step="9">
         <div class="q-title">Audio — Standard zones</div>
-        <div class="q-help">Discreet in-ceiling speakers (as in the Studio reception) for background listening.</div>
+        <div class="q-help"><br/>Discreet in-ceiling speakers (as in the Studio reception) for background listening.</div>
         <div class="field"><input type="number" id="audioStd" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 10 -->
       <div class="step" data-step="10">
         <div class="q-title">Audio — Advanced zones</div>
-        <div class="q-help">Larger / higher-performance (with optional hidden subwoofer) for main living areas.</div>
+        <div class="q-help"><br/>Larger / higher-performance (with optional hidden subwoofer) for main living areas.</div>
         <div class="field"><input type="number" id="audioAdv" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 11 -->
       <div class="step" data-step="11">
         <div class="q-title">Audio — Invisible zones</div>
-        <div class="q-help">Invisible speakers (as heard in our reception, lounge and barn) for design purity.</div>
+        <div class="q-help"><br/>Invisible speakers (as heard in our reception, lounge and barn) for design purity.</div>
         <div class="field"><input type="number" id="audioInv" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 12 -->
       <div class="step" data-step="12">
         <div class="q-title">Audio — Surround zones</div>
-        <div class="q-help">Immersive surround in lounges/snugs (exclude dedicated cinema/media rooms).</div>
+        <div class="q-help"><br/>Immersive surround in lounges/snugs (exclude dedicated cinema/media rooms).</div>
         <div class="field"><input type="number" id="audioSur" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 13 -->
       <div class="step" data-step="13">
         <div class="q-title">Video — 55″ or below</div>
-        <div class="q-help">Smaller displays for bedrooms, studies or secondary spaces.</div>
+        <div class="q-help"><br/>Smaller displays for bedrooms, studies or secondary spaces.</div>
         <div class="field"><input type="number" id="video55" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 14 -->
       <div class="step" data-step="14">
         <div class="q-title">Video — 65″ or above</div>
-        <div class="q-help">Feature TVs for primary living areas (exclude dedicated cinema/media rooms).</div>
+        <div class="q-help"><br/>Feature TVs for primary living areas (exclude dedicated cinema/media rooms).</div>
         <div class="field"><input type="number" id="video65" min="0" step="1" value="0"></div>
       </div>
 
       <!-- Step 15 -->
       <div class="step" data-step="15">
         <div class="q-title">Video Sources</div>
-        <div class="q-help">How would you like your video sources to work?</div>
+        <div class="q-help"><br/>How would you like your video sources to work?</div>
         <div class="opt-list">
           <label class="opt"><input type="radio" name="videoDist" value="local" checked> Local sources in each room</label>
           <label class="opt"><input type="radio" name="videoDist" value="central"> Central sources that follow you around</label>
@@ -158,7 +158,7 @@
       <!-- Step 16 -->
       <div class="step" data-step="16">
         <div class="q-title">Dedicated Cinema or Media Room</div>
-        <div class="q-help">If you have one, what level of performance do you imagine?</div>
+        <div class="q-help"><br/>If you have one, what level of performance do you imagine?</div>
         <div class="opt-list">
           <label class="opt"><input type="radio" name="cinemaLevel" value="none" checked> No dedicated cinema / media room</label>
           <label class="opt"><input type="radio" name="cinemaLevel" value="entry"> Entry level</label>
