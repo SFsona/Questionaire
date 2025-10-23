@@ -546,14 +546,13 @@ html, body {
   min-width: 100px;
   text-align: center;
 }
-/* =========================
-   FOOTER BUTTON ALIGNMENT
-   ========================= */
+/* ===========================================
+   FOOTER BUTTON ALIGNMENT — Back Left / Next Right
+   =========================================== */
 
-/* Footer layout: Back on the left, Next on the right */
 .footer {
   display: flex;
-  justify-content: space-between;  /* pushes buttons apart */
+  justify-content: space-between;   /* pushes Back to left, Next to right */
   align-items: center;
   border-top: 1px solid var(--line);
   padding-top: 20px;
@@ -564,13 +563,22 @@ html, body {
   margin-right: auto;
 }
 
-/* Keep the buttons consistent in appearance */
+/* Ensure both buttons sit in their own positions */
+.footer #btnBack {
+  margin-right: auto;               /* anchors left */
+}
+
+.footer #btnNext {
+  margin-left: auto;                /* anchors right */
+}
+
+/* Optional: spacing consistency & look */
 .footer button {
   min-width: 100px;
   text-align: center;
 }
 
-/* Optional: extra spacing on mobile for tap comfort */
+/* Slightly larger hit area on mobile */
 @media (max-width: 600px) {
   .footer {
     padding-top: 24px;
