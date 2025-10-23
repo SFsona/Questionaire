@@ -1,284 +1,41 @@
-/* ===============================
-   SONA Calculator — Perfectly Centered Stages
-   =============================== */
+/* === Summary stage fixes (center everything + constrain width) === */
 
-/* Variables */
-:root {
-  --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #000000 100%);
-  --ink: #ffffff;
-  --muted: rgba(255, 255, 255, 0.7);
-  --line: rgba(255, 255, 255, 0.25);
-  --radius: 30px;
-
-  /* Adobe Plantin family from your kit */
-  --font-plantin: "plantin", serif;
-  --font-light: var(--font-plantin);
-  --font-regular: var(--font-plantin);
-  --font-semibold: var(--font-plantin);
-  --font-bold: var(--font-plantin);
-
-  --font: var(--font-regular);
-}
-
-/* Page background + base typography */
-html, body {
-  height: 100%;
-  margin: 0;
-  color: var(--ink);
-  font-family: var(--font);
-  font-weight: 400;
-  background: var(--bg-gradient);
-  overflow: hidden; /* prevent stray scrollbars; individual stages are centered */
-}
-
-/* === Single centering stage for EVERYTHING === */
-.wrap {
-  position: relative;     /* anchors absolute children */
-  width: 100%;
-  height: 100vh;          /* full viewport; all stages sit inside this */
-  background: transparent;
-  box-sizing: border-box;
-}
-
-/* Each “page” (welcome, wizard, summary) occupies the same centered slot */
-.welcome,
-#wizard,
+/* Center the whole summary stack vertically & horizontally */
 .summary {
-  position: absolute;
-  inset: 0;                         /* fill .wrap */
-  display: grid;
-  place-items: center;              /* perfect vertical + horizontal centering */
+  position: absolute;   /* keep it in the same 'stage' as welcome/wizard */
+  inset: 0;
+  display: flex;        /* use flex instead of grid here so the whole group centers */
+  flex-direction: column;
+  justify-content: center;  /* vertical centering */
+  align-items: center;      /* horizontal centering */
   padding: 0 20px;
   background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-
-  /* cross-fade movement */
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  will-change: opacity, transform;
 }
 
-/* Hide inactive stage */
-.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(6px);
+/* Constrain every direct child (including the table) to the same container width */
+.summary > * {
+  max-width: 800px;     /* matches your KPI/table content width */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Show active stage */
-.welcome:not(.is-hidden),
-#wizard:not(.is-hidden),
-.summary:not(.is-hidden) {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+/* Keep the table within the container and aligned with headings */
+.summary table {
+  width: 100%;          /* fill the 800px container, not the full viewport */
+  margin: 0 auto 20px auto;
+  border-collapse: collapse;
 }
 
-/* Constrain inner content width on each stage */
-.welcome-inner,
-.wizard,
-.summary > .summary-inner,
-#summary > div,
-#wizard > div {
-  width: min(720px, 100%);
-  margin: 0 auto;
+/* Optional: align the very first header row with the same container rules */
+.summary > div:first-child {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* ===========================================
-   Welcome Screen
-   =========================================== */
-.welcome-inner { text-align: center; }
-.welcome .title {
-  font-family: var(--font-light);
-  font-weight: 300;
-  font-size: clamp(30px, 3vw, 46px);
-  margin-bottom: 16px;
-}
-.welcome .sub {
-  font-family: var(--font-regular);
-  font-weight: 400;
-  font-size: 18px;
-  color: var(--muted);
-  margin-bottom: 36px;
-  line-height: 1.5;
-}
-.start-btn {
-  font-family: var(--font-semibold);
-  font-weight: 600;
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 12px 36px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all .25s ease;
-}
-.start-btn:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
-
-/* ===========================================
-   Wizard (one question at a time)
-   =========================================== */
-.wizard { text-align: center; }
-
-.progress {
-  margin-bottom: 20px;
-  color: var(--muted);
-  text-align: center;
-}
-
-.step {
-  display: none;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .5s ease, transform .5s ease;
-}
-.step.active {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.q-title {
-  font-family: var(--font-light);
-  font-weight: 300;
-  font-size: clamp(22px, 2.5vw, 30px);
-  margin-bottom: 18px;
-}
-.q-help {
-  font-family: var(--font-regular);
-  font-weight: 400;
-  color: var(--muted);
-  font-size: 16px;
-  margin-top: 8px;
-  margin-bottom: 20px;
-}
-
-/* Inputs / options */
-.field {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.field.two { gap: 12px; }
-.field input,
-.field select {
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 10px 16px;
-  font-size: 16px;
-  font-family: var(--font-regular);
-  text-align: center;
-  outline: none;
-  appearance: none;
-}
-.field input:focus,
-.field select:focus { border-color: rgba(255,255,255,.5); }
-
-.opt-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-.opt {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 10px 18px;
-  font-family: var(--font-regular);
-  color: var(--ink);
-  width: fit-content;
-  cursor: pointer;
-  transition: all .25s ease;
-}
-.opt:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
-.opt input { accent-color: white; transform: scale(1.2); }
-
-/* Footer controls */
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  border-top: 1px solid var(--line);
-  padding-top: 20px;
-}
-.pill {
-  display: inline-block;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-family: var(--font-regular);
-  font-size: 13px;
-  color: var(--muted);
-  letter-spacing: .1em;
-}
-button {
-  font-family: var(--font-semibold);
-  font-weight: 600;
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 10px 26px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all .25s ease;
-}
-button:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
-button:disabled { opacity: .4; cursor: not-allowed; }
-
-/* ===========================================
-   Summary
-   =========================================== */
-.summary { color: var(--ink); }
-.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
-.kpi { flex: 1 1 240px; }
-.kpi .lab {
-  font-family: var(--font-regular);
-  font-weight: 400;
-  font-size: 15px;
-  color: var(--muted);
-}
-.kpi .val {
-  font-family: var(--font-bold);
-  font-weight: 700;
-  font-size: 26px;
-  margin-top: 4px;
-}
-
-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-table th, table td { border-bottom: 1px solid var(--line); padding: 8px 0; text-align: left; }
-table th {
-  font-family: var(--font-semibold);
-  font-weight: 600;
-  color: var(--muted);
-  font-size: 14px;
-}
-table td {
-  font-family: var(--font-regular);
-  font-weight: 400;
-  font-size: 15px;
-  color: var(--ink);
-}
-
-.note {
-  font-family: var(--font-regular);
-  font-style: italic;
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .welcome, #wizard, .summary { transition: none !important; transform: none !important; }
+/* If you want the summary text block to read left but still be centered overall */
+.summary {
+  text-align: left;
 }
