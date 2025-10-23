@@ -13,7 +13,7 @@ if (btnStart) {
     welcome.classList.add("is-hidden");
     wizard.classList.remove("is-hidden");
   });
-}
+})
 
 // Boot flag so we can tell it loaded
   window.SONA_BOOTSTRAPPED = true;
