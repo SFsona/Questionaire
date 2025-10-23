@@ -679,7 +679,7 @@ input[type="number"] {
 
 /* Keep all child sections (kpis, tblsys, note) same width */
 .summary > *,
-#tblsys {
+#tblSys {
   width: 100%;
   max-width: 800px;     /* matches KPIs and note blocks */
   margin-left: auto;
@@ -687,14 +687,14 @@ input[type="number"] {
 }
 
 /* Force the table itself to obey same padding grid */
-#tblsys {
+#tblSys {
   border-collapse: collapse;
   text-align: left;
   table-layout: fixed;  /* prevent expansion by long labels */
 }
 
-#tblsys th,
-#tblsys td {
+#tblSys th,
+#tblSys td {
   padding: 10px 16px;
   border-bottom: 1px solid rgba(255,255,255,0.15);
   text-align: left;
@@ -716,7 +716,7 @@ input[type="number"] {
    =========================================== */
 
 /* Fade the horizontal lines on the summary table */
-#tblsys {
+#tblSys {
   position: relative;
   max-width: 800px;
   border-collapse: collapse;
@@ -725,7 +725,7 @@ input[type="number"] {
 }
 
 /* Use a fading mask gradient to soften table edges */
-#tblsys::before {
+#tblSys::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -755,8 +755,8 @@ input[type="number"] {
 }
 
 /* Table cell styling remains clean and consistent */
-#tblsys th,
-#tblsys td {
+#tblSys th,
+#tblSys td {
   padding: 10px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   text-align: left;
