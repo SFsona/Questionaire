@@ -547,12 +547,12 @@ html, body {
   text-align: center;
 }
 /* ===========================================
-   FOOTER BUTTON ALIGNMENT — Back Left / Next Right
+   FOOTER ALIGNMENT — Back Left / Next Right (with inner flex wrapper)
    =========================================== */
 
 .footer {
   display: flex;
-  justify-content: space-between;   /* pushes Back to left, Next to right */
+  justify-content: space-between;   /* pushes the inner flex group to the right edge */
   align-items: center;
   border-top: 1px solid var(--line);
   padding-top: 20px;
@@ -563,16 +563,24 @@ html, body {
   margin-right: auto;
 }
 
-/* Ensure both buttons sit in their own positions */
+/* Reset the inner button group so both buttons don't hug the left */
+.footer > div {
+  display: flex;
+  justify-content: flex-end;        /* buttons align to the right */
+  flex: 1;
+}
+
+/* Back button on far left */
 .footer #btnBack {
-  margin-right: auto;               /* anchors left */
+  margin-right: auto;               /* pushes Back to the left side of the footer */
 }
 
+/* Next button stays on the far right */
 .footer #btnNext {
-  margin-left: auto;                /* anchors right */
+  margin-left: auto;
 }
 
-/* Optional: spacing consistency & look */
+/* Keep consistent sizing */
 .footer button {
   min-width: 100px;
   text-align: center;
