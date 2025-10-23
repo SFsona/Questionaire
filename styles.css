@@ -853,7 +853,13 @@ html, body {
   overflow: visible;  /* default; summary gets auto in the block above */
 }
 @keyframes gradientShift {
-  0%   { background-position: 0% 50%; background: linear-gradient(120deg, #141414, #191782, #671782); }
-  50%  { background-position: 100% 50%; background: linear-gradient(240deg, #141414, #191782, #671782); }
-  100% { background-position: 0% 50%; background: linear-gradient(120deg, #141414, #191782, #671782); }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
