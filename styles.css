@@ -1,5 +1,6 @@
 /* ===============================
    GLOBAL STYLES – SONA Calculator
+   (Option 2: fully centered layout)
    =============================== */
 
 /* Variables */
@@ -10,7 +11,7 @@
   --line: rgba(255, 255, 255, 0.25);
   --radius: 30px;
 
-  /* Adobe Plantin family */
+  /* Adobe Plantin family from your kit */
   --font-plantin: "plantin", serif;
 
   /* Plantin variants (all under 'plantin', controlled by weight/style) */
@@ -27,28 +28,34 @@
   --font: var(--font-regular);
 }
 
-/* Base layout */
+/* Fully centered viewport container */
 html, body {
-  margin: 0;
-  padding: 0;
   height: 100%;
+  margin: 0;
   background: var(--bg-gradient);
+  color: var(--ink);
   font-family: var(--font);
   font-weight: 400;
-  color: var(--ink);
+
+  /* Option 2 centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Prevent stray x-scrollbars */
   overflow-x: hidden;
 }
 
+/* Main wrapper sits in the centered viewport */
 .wrap {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  max-width: 720px;
   padding: 40px 20px;
+  text-align: center;
+  box-sizing: border-box;
 }
 
-/* Welcome + Wizard fade cross-over */
+/* Welcome + Wizard cross-fade (no layout shift) */
 .welcome,
 #wizard {
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -112,6 +119,7 @@ html, body {
   border: none;
   box-shadow: none;
   backdrop-filter: none;
+  margin: 0 auto;
 }
 
 .progress {
@@ -119,7 +127,7 @@ html, body {
   color: var(--muted);
 }
 
-/* Steps — one question at a time */
+/* Steps — one question at a time with soft fade */
 .step { 
   display: none;
   opacity: 0;
@@ -233,11 +241,8 @@ button:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px);
 button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* Summary */
-.summary { max-width: 800px; text-align: left; color: var(--ink); }
-.kpis {
-  display: flex; gap: 12px; flex-wrap: wrap;
-  margin-top: 20px; margin-bottom: 30px;
-}
+.summary { max-width: 800px; text-align: left; color: var(--ink); margin: 0 auto; }
+.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
 .kpi { flex: 1 1 240px; }
 .kpi .lab {
   font-family: var(--font-regular);
