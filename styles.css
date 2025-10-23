@@ -161,3 +161,54 @@ button{
   border-bottom: none;
   background: transparent;
 }
+
+/* === WELCOME SCREEN STYLING === */
+.welcome {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ink);
+}
+
+.welcome-inner {
+  max-width: 700px;
+  padding: 0 24px;
+}
+
+.welcome .title {
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, 42px);
+  margin-bottom: 12px;
+}
+
+.welcome .sub {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.start-btn {
+  font-family: var(--font);
+  font-weight: 400;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.start-btn:hover {
+  border-color: rgba(255,255,255,.4);
+  transform: translateY(-1px);
+}
+
+/* Hide wizard initially until Get Started is clicked */
+#wizard {
+  display: none;
+}
