@@ -666,3 +666,36 @@ input[type="number"] {
   font-family: var(--font-regular);
   font-size: 1rem;
 }
+/* ===========================================
+   SUMMARY TABLE ALIGNMENT FIX
+   =========================================== */
+
+/* Constrain table width to match other summary elements */
+#tblsys {
+  width: 100%;
+  max-width: 800px;             /* same width as summary container */
+  margin: 0 auto 24px auto;     /* center horizontally + spacing below */
+  border-collapse: collapse;
+  text-align: left;
+}
+
+/* Ensure table headers and cells align cleanly within container */
+#tblsys th,
+#tblsys td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Optional: fine-tune top spacing so it lines up with KPI and note blocks */
+.summary .kpis + #tblsys {
+  margin-top: 20px;
+}
+
+/* Keep note text aligned to same container width */
+.summary .note {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
