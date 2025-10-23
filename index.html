@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home Technology Budget Calculator</title>
+
+  <!-- If your site already loads MT Plantin Pro, remove this -->
+  <link rel="stylesheet" href="https://use.typekit.net/XXXXXX.css">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <div class="title">Home Technology Budget Calculator</div>
+        <div class="sub">A continuation of your SONA Studio experience — we’ll present a refined Low–High estimate (ex VAT).</div>
+      </div>
+      <!-- (no ROM tool badge) -->
+    </div>
+
+    <div class="wizard" id="wizard">
+      <div class="progress"><div class="bartext" id="bartext">STEP 1 / 16</div></div>
+
+      <!-- One question per screen -->
+      <div class="step active" data-step="1">
+        <div class="q-title">Tell us a little about your home</div>
+        <div class="q-help">Approximately how large is the property?</div>
+        <div class="field two">
+          <input type="number" id="sizeValue" min="20" step="1" placeholder="e.g. 250">
+          <select id="sizeUnit">
+            <option value="sqm" selected>m²</option>
+            <option value="sqft">ft²</option>
+          </select>
+        </div>
+        <div class="q-help" style="margin-top:8px;">Enter in square metres or square feet — whichever feels most natural.</div>
+      </div>
+
+      <div class="step" data-step="2">
+        <div class="q-title">Bedrooms</div>
+        <div class="q-help">How many bedrooms does the property have?</div>
+        <div class="field"><input type="number" id="bedrooms" min="1" step="1" placeholder="e.g. 4"></div>
+      </div>
+
+      <div class="step" data-step="3">
+        <div class="q-title">Leisure &amp; entertaining</div>
+        <div class="q-help">Beyond your main living spaces, how many dedicated leisure or entertaining rooms are there (gym, pool, spa, games room, bar)?</div>
+        <div class="field"><input type="number" id="leisure" min="0" step="1" placeholder="e.g. 2"></div>
+      </div>
+
+      <div class="step" data-step="4">
+        <div class="q-title">Access &amp; Intercom</div>
+        <div class="q-help">How many audio-only entry locations?</div>
+        <div class="field"><input type="number" id="entryAudio" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="5">
+        <div class="q-title">Access &amp; Intercom</div>
+        <div class="q-help">How many audio &amp; video entry locations?</div>
+        <div class="field"><input type="number" id="entryAV" min="0" step="1" value="1"></div>
+      </div>
+
+      <div class="step" data-step="6">
+        <div class="q-title">Lighting Control</div>
+        <div class="q-help">Where would you like the benefit of lighting control?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="lightingScope" value="entire" checked> Throughout the entire property</label>
+          <label class="opt"><input type="radio" name="lightingScope" value="main"> Main living &amp; entertainment spaces plus master suite</label>
+        </div>
+      </div>
+
+      <div class="step" data-step="7">
+        <div class="q-title">High Quality Architectural Lighting</div>
+        <div class="q-help">How many rooms would you like to include?</div>
+        <div class="field"><input type="number" id="archFittingsRooms" min="0" step="1" value="0"></div>
+        <label class="opt" style="margin-top:10px; display:inline-flex;">
+          <input type="checkbox" id="archAll"> All rooms (we’ll estimate)
+        </label>
+      </div>
+
+      <div class="step" data-step="8">
+        <div class="q-title">Motorised Shading</div>
+        <div class="q-help">How many window treatments would you like to automate?</div>
+        <div class="field"><input type="number" id="shades" min="0" step="1" value="0"></div>
+        <div class="q-help" style="margin-top:8px;">Include curtains, blinds and skylights. Count each shade individually.</div>
+      </div>
+
+      <div class="step" data-step="9">
+        <div class="q-title">Audio — Standard zones</div>
+        <div class="q-help">Discreet in-ceiling speakers (as in the Studio reception) for background listening.</div>
+        <div class="field"><input type="number" id="audioStd" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="10">
+        <div class="q-title">Audio — Advanced zones</div>
+        <div class="q-help">Larger / higher-performance (with optional hidden subwoofer) for main living areas.</div>
+        <div class="field"><input type="number" id="audioAdv" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="11">
+        <div class="q-title">Audio — Invisible zones</div>
+        <div class="q-help">Invisible speakers (as heard in our reception, lounge and barn) for design purity.</div>
+        <div class="field"><input type="number" id="audioInv" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="12">
+        <div class="q-title">Audio — Surround zones</div>
+        <div class="q-help">Immersive surround in lounges/snugs (exclude dedicated cinema/media rooms).</div>
+        <div class="field"><input type="number" id="audioSur" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="13">
+        <div class="q-title">Video — 55″ or below</div>
+        <div class="q-help">Smaller displays for bedrooms, studies or secondary spaces.</div>
+        <div class="field"><input type="number" id="video55" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="14">
+        <div class="q-title">Video — 65″ or above</div>
+        <div class="q-help">Feature TVs for primary living areas (exclude dedicated cinema/media rooms).</div>
+        <div class="field"><input type="number" id="video65" min="0" step="1" value="0"></div>
+      </div>
+
+      <div class="step" data-step="15">
+        <div class="q-title">Video sources</div>
+        <div class="q-help">How would you like your video sources to work?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="videoDist" value="local" checked> Local sources in each room</label>
+          <label class="opt"><input type="radio" name="videoDist" value="central"> Central sources that follow you around</label>
+        </div>
+      </div>
+
+      <div class="step" data-step="16">
+        <div class="q-title">Dedicated cinema or media room</div>
+        <div class="q-help">If you have one, what level of performance do you imagine?</div>
+        <div class="opt-list">
+          <label class="opt"><input type="radio" name="cinemaLevel" value="none" checked> No dedicated cinema / media room</label>
+          <label class="opt"><input type="radio" name="cinemaLevel" value="entry"> Entry level</label>
+          <label class="opt"><input type="radio" name="cinemaLevel" value="mid"> Mid level</label>
+          <label class="opt"><input type="radio" name="cinemaLevel" value="high"> High / reference level</label>
+        </div>
+      </div>
+
+      <div class="footer">
+        <span class="pill" id="stepBadge">STEP 1 / 16</span>
+        <div style="display:flex; gap:10px;">
+          <button id="btnBack" type="button" disabled>Back</button>
+          <button id="btnNext" type="button">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary" id="summary" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div>
+          <h3 style="margin:0;">Estimate Summary (ex VAT)</h3>
+          <div class="fadein" style="color:var(--muted); font-size:13px; margin-top:2px;">Based on your selections</div>
+        </div>
+        <span class="pill" style="letter-spacing:.15em; color:var(--muted);">ROM only</span>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi fadein-delayed"><div class="lab">Low estimate (ex VAT)</div><div class="val" id="kpiLow">–</div></div>
+        <div class="kpi fadein-delayed"><div class="lab">High estimate (ex VAT)</div><div class="val" id="kpiHigh">–</div></div>
+      </div>
+
+      <table id="tblSys">
+        <thead><tr><th>System</th><th>Estimate (ex VAT)</th></tr></thead>
+        <tbody id="tbodySys"></tbody>
+      </table>
+
+      <div class="note">
+        Almost every element of a system can be tailored to suit both function and performance. For example, a 55″ television might range from under £1,000 to over £2,000, and a high-quality plaster-in downlight can cost significantly more than a standard recessed version. This calculator presents an indicative range reflecting those possibilities.
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:8px; justify-content:flex-end;">
+        <button id="btnExport" type="button">Export CSV</button>
+        <button id="btnPrint" type="button">Print / PDF</button>
+        <button id="btnRestart" type="button">Start over</button>
+      </div>
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
