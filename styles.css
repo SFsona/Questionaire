@@ -1,221 +1,58 @@
-:root{
-  --ink:#ffffff;
-  --muted:rgba(255,255,255,.75);
-  --muted-2:rgba(255,255,255,.55);
-  --line:rgba(255,255,255,.18);
-  --line-soft:rgba(255,255,255,.12);
-  --font:"MT Plantin Pro", Georgia, "Times New Roman", Times, serif;
+/* ===============================
+   GLOBAL STYLES – SONA Calculator
+   =============================== */
 
-  --radius:999px;      /* pill */
-  --radius-card:18px;
-  --shadow:0 20px 60px rgba(0,0,0,.35);
+/* 1. COLOURS & TYPOGRAPHY VARIABLES */
+:root {
+  --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #000000 100%);
+  --ink: #ffffff;
+  --muted: rgba(255, 255, 255, 0.7);
+  --line: rgba(255, 255, 255, 0.25);
+  --radius: 30px;
+
+  /* Plantin Adobe Fonts family */
+  --font-plantin: "plantin", serif;
+
+  /* Font variants (Adobe kit exposes all under "plantin") */
+  --font-light: var(--font-plantin);
+  --font-light-italic: var(--font-plantin);
+  --font-regular: var(--font-plantin);
+  --font-italic: var(--font-plantin);
+  --font-semibold: var(--font-plantin);
+  --font-semibold-italic: var(--font-plantin);
+  --font-bold: var(--font-plantin);
+  --font-bold-italic: var(--font-plantin);
+
+  /* Default fallback */
+  --font: var(--font-regular);
 }
 
-*{ box-sizing:border-box; }
-html, body{ height:100%; }
-body{
-  margin:0; color:var(--ink); font-family:var(--font);
-  background:
-    radial-gradient(1200px 800px at 35% 35%, #6d1cff 0%, rgba(109,28,255,.45) 35%, rgba(109,28,255,0) 60%),
-    radial-gradient(1200px 800px at 70% 55%, #0a1a6b 0%, rgba(10,26,107,.55) 35%, rgba(10,26,107,0) 60%),
-    radial-gradient(1400px 900px at 100% 0%, #000000 0%, #000 60%);
-  background-color:#000;
-}
-
-.wrap{ max-width:980px; margin:0 auto; padding:28px 18px; }
-
-/* Header */
-.header{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; }
-.title{ font-weight:700; letter-spacing:.2px; font-size:clamp(22px,2.8vw,34px); }
-.sub{ color:var(--muted); font-size:14px; }
-
-/* Wizard shell */
-.wizard{
-  border:1px solid var(--line-soft); border-radius:var(--radius-card);
-  backdrop-filter: blur(6px);
-  background:rgba(255,255,255,.02);
-  overflow:hidden; box-shadow:var(--shadow);
-}
-
-/* Top progress */
-.progress{
-  height:42px; display:flex; align-items:center; justify-content:center;
-  border-bottom:1px solid var(--line-soft);
-  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-  letter-spacing:.35em; color:var(--muted-2); font-size:12px;
-}
-.progress .bartext{ font-variant-numeric:tabular-nums; }
-
-/* Steps — one question per screen, fully centered */
-.step{
-  min-height:54vh;
-  display:none;
-  padding:38px 22px 26px;
-  place-content:center; place-items:center; text-align:center;
-}
-.step.active{ display:grid; }
-
-.q-title{ font-size:clamp(22px,2.6vw,32px); font-weight:700; margin:0 0 6px; }
-.q-help{ color:var(--muted); font-size:16px; max-width:740px; margin:0 auto 18px; }
-
-/* Fields / options */
-.field{ width:min(620px,100%); margin:0 auto; }
-input[type="number"], select{
-  width:100%;
-  background:transparent; color:var(--ink);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:12px 16px; font-size:18px; outline:none;
-}
-input[type="number"]::placeholder{ color:var(--muted-2); }
-
-.two{ display:grid; grid-template-columns:1fr 150px; gap:12px; }
-.opt-list{ display:grid; gap:12px; width:min(700px,100%); margin:10px auto 0; }
-.opt{
-  display:flex; gap:12px; align-items:center; justify-content:center;
-  border:1px solid var(--line); border-radius:var(--radius);
-  padding:12px 18px; cursor:pointer; user-select:none;
-  background:rgba(255,255,255,.02);
-  transition:transform .15s ease, border-color .15s ease, background .15s ease;
-}
-.opt:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.04); }
-.opt input{ accent-color:#fff; width:18px; height:18px; }
-
-/* Footer controls */
-.footer{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:16px 18px; border-top:1px solid var(--line-soft);
-  background:linear-gradient(0deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-}
-.pill{ color:var(--muted); font-size:12px; letter-spacing:.15em; }
-button{
-  background:transparent; color:var(--ink);
-  border:1px solid var(--line); border-radius:var(--radius);
-  padding:10px 18px; cursor:pointer; font-weight:700; font-size:14px;
-}
-button:hover{ border-color:rgba(255,255,255,.35); }
-button[disabled]{ opacity:.45; cursor:not-allowed; }
-
-/* Summary */
-.summary{
-  margin-top:18px; border:1px solid var(--line-soft); border-radius:var(--radius-card);
-  background:rgba(255,255,255,.02);
-  padding:18px; box-shadow:var(--shadow);
-}
-.kpis{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
-@media (max-width:720px){ .kpis{ grid-template-columns:1fr; } }
-.kpi{ border:1px solid var(--line); border-radius:16px; padding:14px; background:rgba(255,255,255,.02); }
-.kpi .lab{ color:var(--muted); font-size:12px; }
-.kpi .val{ font-weight:800; font-size:22px; letter-spacing:.2px; }
-
-table{ width:100%; border-collapse:collapse; margin-top:14px; }
-th,td{ padding:10px 6px; border-bottom:1px solid var(--line-soft); text-align:left; }
-th{ color:var(--muted-2); font-size:12px; text-transform:uppercase; letter-spacing:.6px; }
-td:last-child, th:last-child{ text-align:right; }
-
-.note{ color:var(--muted); font-size:13px; margin-top:10px; }
-
-/* Fades */
-.fadein{ opacity:0; transform: translateY(4px); animation: fadeIn .6s ease forwards; }
-.fadein-delayed{ opacity:0; transform: translateY(6px); animation: fadeIn .8s ease forwards; animation-delay: .3s; }
-@keyframes fadeIn{ to{ opacity:1; transform: translateY(0); } }
-
-/* === SONA requested style refinements (append to end of styles.css) === */
-
-/* 1) Remove the 'box' around the questionnaire (keep layout/positioning) */
-.wizard{
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-}
-
-/* 2) Centre the main header title and sub */
-.header{
-  justify-content: center !important;
-}
-.header > div{
-  text-align: center !important;
-}
-
-/* 3) q-title: use lighter weight Plantin (regular/medium instead of bold) */
-.q-title{
-  font-weight: 500;              /* try 400 if you prefer even lighter */
-  letter-spacing: 0.1px;
-  margin-bottom: 16px;           /* 4) a touch more space before q-help */
-}
-
-/* 4) Slightly increase spacing between q-title and q-help */
-.q-help{
-  margin-top: 6px;
-}
-
-/* 5) Back / Next buttons: Plantin MT regular */
-button{
+/* 2. BASE LAYOUT */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg-gradient);
   font-family: var(--font);
-  font-weight: 400;              /* regular */
+  font-weight: 400;
+  color: var(--ink);
+  overflow-x: hidden;
 }
 
-/* Optional: soften any residual outlines that came from the wizard shell */
-.progress{
-  border-bottom: none;
-  background: transparent;
-}
-
-/* === WELCOME SCREEN STYLING === */
-.welcome {
-  min-height: 80vh;
+.wrap {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   text-align: center;
-  color: var(--ink);
+  padding: 40px 20px;
 }
 
-.welcome-inner {
-  max-width: 700px;
-  padding: 0 24px;
-}
-
-.welcome .title {
-  font-weight: 700;
-  font-size: clamp(28px, 3vw, 42px);
-  margin-bottom: 12px;
-}
-
-.welcome .sub {
-  font-size: 16px;
-  color: var(--muted);
-  margin-bottom: 32px;
-  line-height: 1.5;
-}
-
-.start-btn {
-  font-family: var(--font);
-  font-weight: 400;
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 12px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all .25s ease;
-}
-
-.start-btn:hover {
-  border-color: rgba(255,255,255,.4);
-  transform: translateY(-1px);
-}
-
-/* Hide wizard initially until Get Started is clicked */
-#wizard {
-  display: none;
-}
-/* === Welcome → Wizard cross-fade === */
+/* 3. WELCOME SCREEN */
 .welcome,
 #wizard {
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
   will-change: opacity, transform;
 }
 
@@ -226,7 +63,6 @@ button{
   transform: translateY(6px);
 }
 
-/* ensure visible state */
 .welcome:not(.is-hidden),
 #wizard:not(.is-hidden) {
   opacity: 1;
@@ -234,12 +70,238 @@ button{
   transform: translateY(0);
 }
 
-/* Remove any old hard hide rule */
-#wizard { /* if you had display:none earlier, override it */
-  display: block !important;
+.welcome {
+  color: var(--ink);
+  text-align: center;
 }
 
-/* Accessibility: respect reduced motion */
+.welcome-inner {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.welcome .title {
+  font-family: var(--font-light);
+  font-weight: 300;
+  font-size: clamp(30px, 3vw, 46px);
+  margin-bottom: 16px;
+}
+
+.welcome .sub {
+  font-family: var(--font-regular);
+  font-weight: 400;
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 36px;
+  line-height: 1.5;
+}
+
+.start-btn {
+  font-family: var(--font-semibold);
+  font-weight: 600;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 36px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.start-btn:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* 4. QUESTIONNAIRE */
+.wizard {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+.progress {
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.q-title {
+  font-family: var(--font-light);
+  font-weight: 300;
+  font-size: clamp(22px, 2.5vw, 30px);
+  margin-bottom: 18px;
+}
+
+.q-help {
+  font-family: var(--font-regular);
+  font-weight: 400;
+  color: var(--muted);
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.field {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.field input,
+.field select {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 16px;
+  font-family: var(--font-regular);
+  text-align: center;
+  outline: none;
+  appearance: none;
+}
+.field input:focus,
+.field select:focus {
+  border-color: rgba(255,255,255,0.5);
+}
+
+.opt-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 18px;
+  font-family: var(--font-regular);
+  color: var(--ink);
+  width: fit-content;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.opt:hover {
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-1px);
+}
+.opt input {
+  accent-color: white;
+  transform: scale(1.2);
+}
+
+/* 5. FOOTER NAVIGATION */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.pill {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: var(--font-regular);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+button {
+  font-family: var(--font-semibold);
+  font-weight: 600;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 26px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+button:hover {
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-1px);
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 6. SUMMARY PAGE */
+.summary {
+  max-width: 800px;
+  text-align: left;
+  color: var(--ink);
+}
+
+.kpis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.kpi .lab {
+  font-family: var(--font-regular);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--muted);
+}
+.kpi .val {
+  font-family: var(--font-bold);
+  font-weight: 700;
+  font-size: 26px;
+  margin-top: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+table th, table td {
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+  text-align: left;
+}
+table th {
+  font-family: var(--font-semibold);
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 14px;
+}
+table td {
+  font-family: var(--font-regular);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.note {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* 7. ACCESSIBILITY / REDUCED MOTION */
 @media (prefers-reduced-motion: reduce) {
   .welcome, #wizard { transition: none !important; transform: none !important; }
 }
