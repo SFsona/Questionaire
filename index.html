@@ -5,18 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home Technology Budget Calculator</title>
 
-  <!-- Load your core styles -->
+  <!-- Adobe Fonts kit (Plantin) -->
   <link rel="stylesheet" href="https://use.typekit.net/kxn3txd.css" />
+
+  <!-- Core styles -->
   <link rel="stylesheet" href="styles.css" />
-
 </head>
-
 <body>
   <div class="wrap">
 
-    <!-- ===============================
-         WELCOME SCREEN
-    ================================== -->
+    <!-- WELCOME SCREEN -->
     <div class="welcome" id="welcome">
       <div class="welcome-inner">
         <div class="title">Home Technology Budget Calculator</div>
@@ -27,15 +25,13 @@
       </div>
     </div>
 
-    <!-- ===============================
-         QUESTIONNAIRE WIZARD
-    ================================== -->
+    <!-- QUESTIONNAIRE WIZARD -->
     <div class="wizard is-hidden" id="wizard">
       <div class="progress">
         <div class="bartext" id="bartext">STEP 1 / 16</div>
       </div>
 
-      <!-- === Step 1 === -->
+      <!-- Step 1 -->
       <div class="step active" data-step="1">
         <div class="q-title">Tell us a little about your home</div>
         <div class="q-help">Approximately how large is the property?</div>
@@ -49,35 +45,35 @@
         <div class="q-help" style="margin-top:8px;">Enter in square metres or square feet — whichever feels most natural.</div>
       </div>
 
-      <!-- === Step 2 === -->
+      <!-- Step 2 -->
       <div class="step" data-step="2">
         <div class="q-title">Bedrooms</div>
         <div class="q-help">How many bedrooms does the property have?</div>
         <div class="field"><input type="number" id="bedrooms" min="1" step="1" placeholder="e.g. 4"></div>
       </div>
 
-      <!-- === Step 3 === -->
+      <!-- Step 3 -->
       <div class="step" data-step="3">
         <div class="q-title">Leisure &amp; entertaining</div>
         <div class="q-help">Beyond your main living spaces, how many dedicated leisure or entertaining rooms are there (gym, pool, spa, games room, bar)?</div>
         <div class="field"><input type="number" id="leisure" min="0" step="1" placeholder="e.g. 2"></div>
       </div>
 
-      <!-- === Step 4 === -->
+      <!-- Step 4 -->
       <div class="step" data-step="4">
         <div class="q-title">Access &amp; Intercom</div>
         <div class="q-help">How many audio-only entry locations?</div>
         <div class="field"><input type="number" id="entryAudio" min="0" step="1" value="0"></div>
       </div>
 
-      <!-- === Step 5 === -->
+      <!-- Step 5 -->
       <div class="step" data-step="5">
         <div class="q-title">Access &amp; Intercom</div>
         <div class="q-help">How many audio &amp; video entry locations?</div>
         <div class="field"><input type="number" id="entryAV" min="0" step="1" value="1"></div>
       </div>
 
-      <!-- === Step 6 === -->
+      <!-- Step 6 -->
       <div class="step" data-step="6">
         <div class="q-title">Lighting Control</div>
         <div class="q-help">Where would you like the benefit of lighting control?</div>
@@ -87,7 +83,7 @@
         </div>
       </div>
 
-      <!-- === Step 7 === -->
+      <!-- Step 7 -->
       <div class="step" data-step="7">
         <div class="q-title">High Quality Architectural Lighting</div>
         <div class="q-help">How many rooms would you like to include?</div>
@@ -97,7 +93,7 @@
         </label>
       </div>
 
-      <!-- === Step 8 === -->
+      <!-- Step 8 -->
       <div class="step" data-step="8">
         <div class="q-title">Motorised Shading</div>
         <div class="q-help">How many window treatments would you like to automate?</div>
@@ -105,43 +101,49 @@
         <div class="q-help" style="margin-top:8px;">Include curtains, blinds and skylights. Count each shade individually.</div>
       </div>
 
-      <!-- === Step 9–16 (Audio, Video, Cinema etc) -->
+      <!-- Step 9 -->
       <div class="step" data-step="9">
         <div class="q-title">Audio — Standard zones</div>
         <div class="q-help">Discreet in-ceiling speakers (as in the Studio reception) for background listening.</div>
         <div class="field"><input type="number" id="audioStd" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- Step 10 -->
       <div class="step" data-step="10">
         <div class="q-title">Audio — Advanced zones</div>
         <div class="q-help">Larger / higher-performance (with optional hidden subwoofer) for main living areas.</div>
         <div class="field"><input type="number" id="audioAdv" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- Step 11 -->
       <div class="step" data-step="11">
         <div class="q-title">Audio — Invisible zones</div>
         <div class="q-help">Invisible speakers (as heard in our reception, lounge and barn) for design purity.</div>
         <div class="field"><input type="number" id="audioInv" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- Step 12 -->
       <div class="step" data-step="12">
         <div class="q-title">Audio — Surround zones</div>
         <div class="q-help">Immersive surround in lounges/snugs (exclude dedicated cinema/media rooms).</div>
         <div class="field"><input type="number" id="audioSur" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- Step 13 -->
       <div class="step" data-step="13">
         <div class="q-title">Video — 55″ or below</div>
         <div class="q-help">Smaller displays for bedrooms, studies or secondary spaces.</div>
         <div class="field"><input type="number" id="video55" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- Step 14 -->
       <div class="step" data-step="14">
         <div class="q-title">Video — 65″ or above</div>
         <div class="q-help">Feature TVs for primary living areas (exclude dedicated cinema/media rooms).</div>
         <div class="field"><input type="number" id="video65" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- Step 15 -->
       <div class="step" data-step="15">
         <div class="q-title">Video Sources</div>
         <div class="q-help">How would you like your video sources to work?</div>
@@ -151,6 +153,7 @@
         </div>
       </div>
 
+      <!-- Step 16 -->
       <div class="step" data-step="16">
         <div class="q-title">Dedicated Cinema or Media Room</div>
         <div class="q-help">If you have one, what level of performance do you imagine?</div>
@@ -162,7 +165,7 @@
         </div>
       </div>
 
-      <!-- === Wizard Footer === -->
+      <!-- Footer -->
       <div class="footer">
         <span class="pill" id="stepBadge">STEP 1 / 16</span>
         <div style="display:flex; gap:10px;">
@@ -172,9 +175,7 @@
       </div>
     </div>
 
-    <!-- ===============================
-         SUMMARY PAGE
-    ================================== -->
+    <!-- SUMMARY -->
     <div class="summary" id="summary" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div>
@@ -206,9 +207,7 @@
     </div>
   </div>
 
-  <!-- ===============================
-       Scripts
-  ================================== -->
+  <!-- Scripts -->
   <script src="config.js" defer></script>
   <script src="app.js" defer></script>
 </body>
