@@ -425,3 +425,7 @@ table td {
     margin-bottom: 36px;
   }
 }
+/* Remove the Step X / Y indicator in the wizard footer */
+.footer .pill {
+  display: none !important;
+}
