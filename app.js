@@ -145,26 +145,30 @@ document.addEventListener("DOMContentLoaded", function () {
     var access = Math.round(entryAudio * (COSTS.access.audioOnly || 0) + entryAV * (COSTS.access.audioVideo || 0));
 
     // Lighting control (keypads + equipment + processor)
-    function baseKeypadsBySqft(ft2){
-      var bands = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.baseBySqft) || [];
-      for (var i=0;i<bands.length;i++){ if (ft2 <= bands[i].maxSqft) return bands[i].qty; }
-      return bands.length ? bands[bands.length - 1].qty : 0;
-    }
-    var baseQty = baseKeypadsBySqft(sqft);
-    var perBed = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.perBedroom) || 0;
-    var perLeisure = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.perLeisure) || 0;
-    var bedSets = (lightingScope === "main") ? (beds > 0 ? 1 : 0) : beds;
-    var keypads = baseQty + bedSets * perBed + leisure * perLeisure;
-    var keypadCost = keypads * (COSTS.lightingControl.keypadCost || 0);
+    var lightingCtl = 0;
 
-    function equipCostBySqft(ft2){
-      var bands = (COSTS.lightingControl && COSTS.lightingControl.equipmentBySqft) || [];
-      for (var i=0;i<bands.length;i++){ if (ft2 <= bands[i].maxSqft) return bands[i].cost; }
-      return bands.length ? bands[bands.length - 1].cost : 0;
+    if (lightingScope !== "none") {
+     function baseKeypadsBySqft(ft2){
+       var bands = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.baseBySqft) || [];
+       for (var i=0;i<bands.length;i++){ if (ft2 <= bands[i].maxSqft) return bands[i].qty; }
+       return bands.length ? bands[bands.length - 1].qty : 0;
+     }
+       var baseQty = baseKeypadsBySqft(sqft);
+       var perBed = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.perBedroom) || 0;
+       var perLeisure = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.perLeisure) || 0;
+       var bedSets = (lightingScope === "main") ? (beds > 0 ? 1 : 0) : beds;
+       var keypads = baseQty + bedSets * perBed + leisure * perLeisure;
+       var keypadCost = keypads * (COSTS.lightingControl.keypadCost || 0);
+       
+      function equipCostBySqft(ft2){
+         var bands = (COSTS.lightingControl && COSTS.lightingControl.equipmentBySqft) || [];
+         for (var i=0;i<bands.length;i++){ if (ft2 <= bands[i].maxSqft) return bands[i].cost; }
+         return bands.length ? bands[bands.length - 1].cost : 0;
+      }
+   var scopeMult = (COSTS.lightingControl.scopeMultiplier && COSTS.lightingControl.scopeMultiplier[lightingScope]) || 1.0;
+       var lightEquip = Math.round(equipCostBySqft(sqft) * scopeMult);
+       lightingCtl = Math.round(keypadCost + lightEquip + (COSTS.lightingControl.processor || 0));
     }
-    var scopeMult = (COSTS.lightingControl.scopeMultiplier && COSTS.lightingControl.scopeMultiplier[lightingScope]) || 1.0;
-    var lightEquip = Math.round(equipCostBySqft(sqft) * scopeMult);
-    var lightingCtl = Math.round(keypadCost + lightEquip + (COSTS.lightingControl.processor || 0));
 
     // High Quality Architectural Lighting
     var lightFit = Math.round(archRooms * (COSTS.lightingFittings.perRoom || 0));
