@@ -363,37 +363,55 @@ table td {
   margin-right: auto;
 }
 /* ===========================================
-   SONA Logo — Responsive + elegant animation
+   SONA Logo + Title Cinematic Fade Sequence
    =========================================== */
 
 .sona-logo {
-  width: clamp(140px, 18vw, 220px);   /* fluid scaling with viewport */
+  width: clamp(140px, 18vw, 220px);
   height: auto;
   display: block;
-  margin: 0 auto 28px auto;           /* centers logo + adds spacing below */
-  opacity: 0.9;                       /* subtle integration with gradient background */
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));  /* gentle glow for contrast */
+  margin: 0 auto 28px auto;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  animation: logoFadeIn 2.5s ease forwards;
+  animation-delay: 0.2s; /* starts right away */
 }
 
-/* Smooth reveal when the welcome screen fades in */
-.welcome:not(.is-hidden) .sona-logo {
-  animation: logoFadeIn 1.2s ease forwards;
+.welcome .title {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: titleFadeIn 2.8s ease forwards;
+  animation-delay: 1.6s; /* starts after logo begins fading in */
 }
 
+.welcome .sub {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: subFadeIn 2.8s ease forwards;
+  animation-delay: 2.8s; /* comes in last for layering effect */
+}
+
+/* Keyframes for smooth motion */
 @keyframes logoFadeIn {
-  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
-  to { opacity: 0.9; transform: translateY(0) scale(1); }
+  0% { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  60% { opacity: 0.9; transform: translateY(0) scale(1); }
+  100% { opacity: 0.95; transform: translateY(0) scale(1); }
 }
 
-/* Hover or focus interaction */
-.sona-logo:hover,
-.sona-logo:focus {
-  opacity: 1;
-  transform: translateY(-2px);
+@keyframes titleFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  40% { opacity: 0.7; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Smaller screens (e.g., mobile phones) */
+@keyframes subFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  40% { opacity: 0.6; transform: translateY(0); }
+  100% { opacity: 0.9; transform: translateY(0); }
+}
+
+/* Responsive logo sizing */
 @media (max-width: 600px) {
   .sona-logo {
     width: clamp(120px, 40vw, 160px);
@@ -401,7 +419,6 @@ table td {
   }
 }
 
-/* Larger screens (desktop + 4K displays) */
 @media (min-width: 1400px) {
   .sona-logo {
     width: 240px;
