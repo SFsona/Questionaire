@@ -850,3 +850,65 @@ html, body {
 .welcome, #wizard, .summary {
   overflow: visible;  /* default; summary gets auto in the block above */
 }
+/* =========================================================
+   SUMMARY — FINAL ALIGNMENT + SPACING HARD FIX
+   ========================================================= */
+
+/* 1) Constrain every direct child of .summary to the same column
+      and add consistent vertical spacing */
+.summary {
+  display: block !important;             /* drop grid/flex if present */
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.summary > * {
+  max-width: 800px !important;           /* the shared content width */
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+/* vertical rhythm between blocks (title -> KPIs -> table -> note) */
+.summary > * + * {
+  margin-top: 28px !important;
+}
+
+/* 2) Make sure the KPI block and the note align with the same inner padding */
+.summary .kpis,
+.summary .note {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+/* 3) TABLE: keep it inside the same column and prevent it from expanding */
+#tblSys,
+.summary table {
+  display: table !important;
+  max-width: 800px !important;
+  width: 100% !important;
+  margin: 16px auto 28px auto !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;        /* long labels won’t force width */
+  box-sizing: border-box !important;
+}
+
+/* 4) Reset any tbody/tr display that could break layout (common overflow culprit) */
+#tblSys thead { display: table-header-group !important; }
+#tblSys tbody,
+#tbodySys        { display: table-row-group !important; width: auto !important; padding: 0 !important; margin: 0 !important; box-sizing: content-box !important; overflow: visible !important; }
+#tblSys tr       { display: table-row !important; }
+
+/* 5) Cell padding so the text edges align with KPI/note padding */
+#tblSys th,
+#tblSys td {
+  padding: 10px 16px !important;         /* 16px matches KPI/note padding */
+  border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  word-wrap: break-word !important;
+}
+
+/* 6) As a last resort, nuke any global table width that might override */
+.summary table { max-width: 800px !important; width: 100% !important; }
