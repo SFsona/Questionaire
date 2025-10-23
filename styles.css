@@ -521,3 +521,28 @@ html, body {
     width: 92vw;   /* a touch of breathing room within viewport */
   }
 }
+/* =========================
+   FOOTER ALIGNMENT FIX
+   ========================= */
+
+/* Remove space for the left badge and align nav buttons to the right */
+.footer {
+  display: flex;
+  justify-content: flex-end;   /* all content moves to the right */
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  margin-top: 30px;
+}
+
+/* Adjust spacing between Back and Next */
+.footer .nav {
+  display: flex;
+  gap: 12px;                   /* space between buttons */
+}
+
+/* Ensure buttons stay visually balanced */
+.footer button {
+  min-width: 100px;
+  text-align: center;
+}
