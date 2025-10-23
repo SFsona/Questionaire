@@ -28,6 +28,8 @@ html, body {
   font-family: var(--font);
   font-weight: 400;
   background: var(--bg-gradient);
+  background-size: 400% 400%;
+  animation: gradientShift 30s ease infinite;
   overflow: hidden; /* prevent stray scrollbars; individual stages are centered */
 }
 
@@ -849,4 +851,9 @@ html, body {
 /* 5) Safety: if earlier styles hid overflow on stages, undo it */
 .welcome, #wizard, .summary {
   overflow: visible;  /* default; summary gets auto in the block above */
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; background: linear-gradient(120deg, #141414, #191782, #671782); }
+  50%  { background-position: 100% 50%; background: linear-gradient(240deg, #141414, #191782, #671782); }
+  100% { background-position: 0% 50%; background: linear-gradient(120deg, #141414, #191782, #671782); }
 }
