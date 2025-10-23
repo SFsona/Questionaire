@@ -3,163 +3,205 @@
    =========================================================== */
 document.addEventListener("DOMContentLoaded", function () {
 
-  // --- Welcome cross-fade transition ---
-  const btnStart = document.getElementById("btnStart");
+  // Welcome cross-fade
+  var btnStart = document.getElementById("btnStart");
   if (btnStart) {
     btnStart.addEventListener("click", function () {
-      const welcome = document.getElementById("welcome");
-      const wizard  = document.getElementById("wizard");
+      var welcome = document.getElementById("welcome");
+      var wizard  = document.getElementById("wizard");
       if (!welcome || !wizard) return;
-      welcome.classList.add("is-hidden");
-      wizard.classList.remove("is-hidden");
+      if (welcome.classList) welcome.classList.add("is-hidden");
+      if (wizard.classList)  wizard.classList.remove("is-hidden");
     });
   }
 
-  // --- Load configuration ---
-  const DEFAULTS = window.SONA_DEFAULTS || {};
-  const COSTS    = window.SONA_COST_MODEL || {};
+  // Config
+  var DEFAULTS = window.SONA_DEFAULTS || {};
+  var COSTS    = window.SONA_COST_MODEL || {};
 
-  // --- Helpers ---
-  const qs  = (sel) => document.querySelector(sel);
-  const qsa = (sel) => Array.from(document.querySelectorAll(sel));
-
-  const valNum = (id, fallback = 0) => {
-    const el = document.getElementById(id);
+  // Helpers
+  function qs(s){ return document.querySelector(s); }
+  function qsa(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
+  function fmtGBP(v){
+    try {
+      return new Intl.NumberFormat("en-GB", { style: "currency", currency: DEFAULTS.currency || "GBP", maximumFractionDigits: 0 }).format(v);
+    } catch(e){
+      return "£" + Math.round(v).toLocaleString("en-GB");
+    }
+  }
+  function valNum(id, fallback){
+    if (fallback === undefined) fallback = 0;
+    var el = document.getElementById(id);
     if (!el) return fallback;
-    const num = parseFloat(el.value.replace(/[^0-9.]/g, ""));
-    return isFinite(num) ? Math.max(0, num) : fallback;
-  };
-  const radioVal = (name) => {
-    const el = document.querySelector(`input[name="${name}"]:checked`);
+    var cleaned = String(el.value || "").replace(/[^0-9.]/g, "");
+    var v = parseFloat(cleaned);
+    return isFinite(v) ? Math.max(0, v) : fallback;
+  }
+  function radioVal(name){
+    var el = document.querySelector('input[name="'+name+'"]:checked');
     return el ? el.value : null;
-  };
-  const m2FromInput = () => {
-    const val = valNum("sizeValue", 0);
-    const unit = (qs("#sizeUnit")?.value) || "sqm";
-    return unit === "sqft" ? val / 10.7639 : val;
-  };
-  const fmtGBP = (v) =>
-    new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(v);
+  }
+  function m2FromInput(){
+    var val = valNum("sizeValue", 0);
+    var unit = (qs("#sizeUnit") && qs("#sizeUnit").value) || "sqm";
+    if (!val) return 0;
+    return unit === "sqft" ? (val / 10.7639) : val;
+  }
 
-  // --- Step navigation ---
-  const steps = qsa(".step");
-  let stepIndex = 0;
+  // Steps nav
+  var steps = qsa(".step");
+  var stepIndex = 0;
 
-  const showStep = (i) => {
-    steps.forEach((s, idx) => s.classList.toggle("active", idx === i));
-    qs("#btnBack").disabled = i === 0;
-    qs("#btnNext").textContent = i === steps.length - 1 ? "See Estimate" : "Next";
-    qs("#stepBadge").textContent = `STEP ${i + 1} / ${steps.length}`;
-    qs("#bartext").textContent = `STEP ${i + 1} / ${steps.length}`;
-  };
+  function setStepBadge(){
+    var txt = "STEP " + (stepIndex + 1) + " / " + steps.length;
+    var sb = qs("#stepBadge"); if (sb) sb.textContent = txt;
+    var bt = qs("#bartext");  if (bt) bt.textContent = txt;
+  }
+  function showStep(i){
+    for (var j=0;j<steps.length;j++){
+      if (steps[j].classList) steps[j].classList.toggle("active", j===i);
+    }
+    var back = qs("#btnBack"); var next = qs("#btnNext");
+    if (back) back.disabled = (i===0);
+    if (next) next.textContent = (i === steps.length - 1) ? "See Estimate" : "Next";
+    setStepBadge();
+  }
   showStep(stepIndex);
 
-  const validateStep = () => {
+  function validateStep(){
     if (stepIndex === 0 && m2FromInput() < 20) return "Please enter property size (≥ 20 m²).";
     if (stepIndex === 1 && valNum("bedrooms", 0) < 1) return "Please enter the number of bedrooms.";
     return null;
-  };
+    }
 
-  qs("#btnNext").addEventListener("click", () => {
-    const err = validateStep();
-    if (err) { alert(err); return; }
-    if (stepIndex < steps.length - 1) {
-      stepIndex++;
-      showStep(stepIndex);
-    } else {
-      showSummary();
+  var btnBack = qs("#btnBack");
+  var btnNext = qs("#btnNext");
+  if (btnBack) btnBack.type = "button";
+  if (btnNext) btnNext.type = "button";
+
+  if (btnBack) btnBack.addEventListener("click", function(){
+    if (stepIndex > 0) { stepIndex -= 1; showStep(stepIndex); }
+  });
+  if (btnNext) btnNext.addEventListener("click", function(){
+    var err = validateStep();
+    if (err){ alert(err); return; }
+    if (stepIndex < steps.length - 1) { stepIndex += 1; showStep(stepIndex); }
+    else { showSummary(); }
+  });
+
+  // Enter to advance, Shift+Enter back
+  document.addEventListener("keydown", function(e){
+    var t = e.target || {};
+    var isInput = t.tagName === "INPUT" || t.tagName === "SELECT";
+    if (e.key === "Enter" && isInput){
+      e.preventDefault();
+      var err = validateStep();
+      if (err){ alert(err); return; }
+      if (stepIndex < steps.length - 1) { stepIndex += 1; showStep(stepIndex); } else { showSummary(); }
+    }
+    if (e.key === "Enter" && e.shiftKey){
+      e.preventDefault();
+      if (stepIndex > 0) { stepIndex -= 1; showStep(stepIndex); }
     }
   });
-  qs("#btnBack").addEventListener("click", () => {
-    if (stepIndex > 0) stepIndex--;
-    showStep(stepIndex);
-  });
 
-  // --- Core estimate calculation ---
-  function estimate() {
-    const m2      = m2FromInput();
-    const sqft    = m2 * 10.7639;
-    const beds    = valNum("bedrooms", 0);
-    const leisure = valNum("leisure", 0);
+  // Estimate engine
+  function estimate(){
+    var m2      = m2FromInput();
+    var sqft    = m2 * 10.7639;
+    var beds    = valNum("bedrooms", 0);
+    var leisure = valNum("leisure", 0);
 
-    const entryAudio = valNum("entryAudio", 0);
-    const entryAV    = valNum("entryAV", 0);
+    var entryAudio = valNum("entryAudio", 0);
+    var entryAV    = valNum("entryAV", 0);
 
-    const lightingScope = radioVal("lightingScope") || "entire";
-    const archAll   = qs("#archAll")?.checked || false;
-    const archRooms = archAll ? Math.max(1, beds + leisure + 4) : valNum("archFittingsRooms", 0);
+    var lightingScope = radioVal("lightingScope") || "entire";
 
-    const shades = valNum("shades", 0);
+    var archAll = (qs("#archAll") && qs("#archAll").checked) || false;
+    var archRooms = archAll ? Math.max(1, beds + leisure + 4) : valNum("archFittingsRooms", 0);
 
-    const audioStd = valNum("audioStd", 0);
-    const audioAdv = valNum("audioAdv", 0);
-    const audioInv = valNum("audioInv", 0);
-    const audioSur = valNum("audioSur", 0);
+    var shades   = valNum("shades", 0);
 
-    const video55  = valNum("video55", 0);
-    const video65  = valNum("video65", 0);
-    const videoDist = radioVal("videoDist") || "local";
-    const cinemaLevel = radioVal("cinemaLevel") || "none";
+    var audioStd = valNum("audioStd", 0);
+    var audioAdv = valNum("audioAdv", 0);
+    var audioInv = valNum("audioInv", 0);
+    var audioSur = valNum("audioSur", 0);
+
+    var video55  = valNum("video55", 0);
+    var video65  = valNum("video65", 0);
+    var videoDist= radioVal("videoDist") || "local";
+
+    var cinemaLevel = radioVal("cinemaLevel") || "none";
 
     // Infrastructure
-    const infra = Math.round(m2 * (COSTS.infrastructure.perSqm || 0));
+    var infra = Math.round(m2 * (COSTS.infrastructure.perSqm || 0));
 
     // Connectivity
-    const aps = Math.max(1, Math.ceil(m2 / (DEFAULTS.apPerSqm || 110)));
-    const switchCost = sqft <= 10000 ? COSTS.connectivity.switchSmall : COSTS.connectivity.switchLarge;
-    const conn = Math.round(COSTS.connectivity.router + switchCost + aps * COSTS.connectivity.ap);
+    var aps = Math.max(1, Math.ceil(m2 / (DEFAULTS.apPerSqm || 110)));
+    var switchCost = sqft <= 10000 ? COSTS.connectivity.switchSmall : COSTS.connectivity.switchLarge;
+    var conn = Math.round((COSTS.connectivity.router || 0) + switchCost + aps * (COSTS.connectivity.ap || 0));
 
-    // Access
-    const access = Math.round(entryAudio * COSTS.access.audioOnly + entryAV * COSTS.access.audioVideo);
+    // Access & Intercom
+    var access = Math.round(entryAudio * (COSTS.access.audioOnly || 0) + entryAV * (COSTS.access.audioVideo || 0));
 
-    // Lighting control
-    const baseBySqft = COSTS.lightingControl.keypadRules.baseBySqft;
-    const baseQty = baseBySqft.find(b => sqft <= b.maxSqft)?.qty || baseBySqft[baseBySqft.length - 1].qty;
-    const perBed = COSTS.lightingControl.keypadRules.perBedroom;
-    const perLeisure = COSTS.lightingControl.keypadRules.perLeisure;
-    const bedSets = lightingScope === "main" ? (beds > 0 ? 1 : 0) : beds;
-    const keypads = baseQty + bedSets * perBed + leisure * perLeisure;
-    const keypadCost = keypads * COSTS.lightingControl.keypadCost;
+    // Lighting control (keypads + equipment + processor)
+    function baseKeypadsBySqft(ft2){
+      var bands = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.baseBySqft) || [];
+      for (var i=0;i<bands.length;i++){ if (ft2 <= bands[i].maxSqft) return bands[i].qty; }
+      return bands.length ? bands[bands.length - 1].qty : 0;
+    }
+    var baseQty = baseKeypadsBySqft(sqft);
+    var perBed = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.perBedroom) || 0;
+    var perLeisure = (COSTS.lightingControl.keypadRules && COSTS.lightingControl.keypadRules.perLeisure) || 0;
+    var bedSets = (lightingScope === "main") ? (beds > 0 ? 1 : 0) : beds;
+    var keypads = baseQty + bedSets * perBed + leisure * perLeisure;
+    var keypadCost = keypads * (COSTS.lightingControl.keypadCost || 0);
 
-    const equip = COSTS.lightingControl.equipmentBySqft.find(b => sqft <= b.maxSqft)?.cost || 0;
-    const scopeMult = COSTS.lightingControl.scopeMultiplier[lightingScope] || 1;
-    const lightEquip = Math.round(equip * scopeMult);
-    const lightingCtl = keypadCost + lightEquip + COSTS.lightingControl.processor;
+    function equipCostBySqft(ft2){
+      var bands = (COSTS.lightingControl && COSTS.lightingControl.equipmentBySqft) || [];
+      for (var i=0;i<bands.length;i++){ if (ft2 <= bands[i].maxSqft) return bands[i].cost; }
+      return bands.length ? bands[bands.length - 1].cost : 0;
+    }
+    var scopeMult = (COSTS.lightingControl.scopeMultiplier && COSTS.lightingControl.scopeMultiplier[lightingScope]) || 1.0;
+    var lightEquip = Math.round(equipCostBySqft(sqft) * scopeMult);
+    var lightingCtl = Math.round(keypadCost + lightEquip + (COSTS.lightingControl.processor || 0));
 
-    // Architectural lighting
-    const lightFit = archRooms * COSTS.lightingFittings.perRoom;
+    // High Quality Architectural Lighting
+    var lightFit = Math.round(archRooms * (COSTS.lightingFittings.perRoom || 0));
 
     // Shading
-    const shading = shades * COSTS.shading.perBlind;
+    var shading = Math.round(shades * (COSTS.shading.perBlind || 0));
 
     // Audio
-    const audio = audioStd * COSTS.audio.standard +
-                  audioAdv * COSTS.audio.advanced +
-                  audioInv * COSTS.audio.invisible +
-                  audioSur * COSTS.audio.surround;
+    var audio = Math.round(
+      audioStd * (COSTS.audio.standard || 0) +
+      audioAdv * (COSTS.audio.advanced || 0) +
+      audioInv * (COSTS.audio.invisible || 0) +
+      audioSur * (COSTS.audio.surround || 0)
+    );
 
     // Video
-    let video = video55 * COSTS.video.upTo55 + video65 * COSTS.video.over65;
-    const zones = video55 + video65;
-    if (zones > 0) {
-      if (videoDist === "central") {
-        video += COSTS.video.centralCore + zones * COSTS.video.centralPerZoneAdd;
+    var zones = video55 + video65;
+    var video = Math.round(video55 * (COSTS.video.upTo55 || 0) + video65 * (COSTS.video.over65 || 0));
+    if (zones > 0){
+      if (videoDist === "central"){
+        video += (COSTS.video.centralCore || 0) + zones * (COSTS.video.centralPerZoneAdd || 0);
       } else {
-        video += zones * COSTS.video.localPerZone;
+        video += zones * (COSTS.video.localPerZone || 0);
       }
     }
 
     // Cinema
-    const cinema = COSTS.cinema[cinemaLevel] || 0;
+    var cinema = (COSTS.cinema && COSTS.cinema[cinemaLevel]) || 0;
 
-    // Power management
-    const subtotal = infra + conn + access + lightingCtl + lightFit + shading + audio + video + cinema;
-    const power = subtotal * (DEFAULTS.powerPct || 0.06);
+    // Containment & Power Mgmt
+    var subtotal = infra + conn + access + lightingCtl + lightFit + shading + audio + video + cinema;
+    var power = Math.round(subtotal * (DEFAULTS.powerPct || 0.06));
 
     // Totals
-    const base = subtotal + power;
-    const low  = Math.round(base * (1 + (DEFAULTS.lowAdjPct || 0)));
-    const high = Math.round(base * (1 + (DEFAULTS.highAdjPct || 0.10)));
+    var base = subtotal + power;
+    var low  = Math.round(base * (1 + (DEFAULTS.lowAdjPct || 0)));
+    var high = Math.round(base * (1 + (DEFAULTS.highAdjPct || 0.10)));
 
     return {
       systems: [
@@ -174,53 +216,66 @@ document.addEventListener("DOMContentLoaded", function () {
         { label: "Home Cinema / Media", cost: cinema },
         { label: "Containment & Power Management", cost: power }
       ],
-      base, low, high
+      base: base, low: low, high: high
     };
   }
 
-  // --- Summary ---
-  function showSummary() {
-    const r = estimate();
-    qs("#wizard").style.display = "none";
-    const summary = qs("#summary");
-    summary.style.display = "block";
+  // Summary
+  function showSummary(){
+    var r = estimate();
+    var wiz = qs("#wizard"); if (wiz) wiz.style.display = "none";
+    var sum = qs("#summary"); if (sum) sum.style.display = "block";
 
-    qs("#kpiLow").textContent  = fmtGBP(r.low);
-    qs("#kpiHigh").textContent = fmtGBP(r.high);
+    var lowEl = qs("#kpiLow");  if (lowEl)  lowEl.textContent  = fmtGBP(r.low);
+    var highEl= qs("#kpiHigh"); if (highEl) highEl.textContent = fmtGBP(r.high);
 
-    const tbody = qs("#tbodySys");
-    tbody.innerHTML = "";
-    r.systems.forEach(sys => {
-      const tr = document.createElement("tr");
-      const td1 = document.createElement("td");
-      const td2 = document.createElement("td");
-      td1.textContent = sys.label;
-      td2.textContent = fmtGBP(sys.cost);
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tbody.appendChild(tr);
-    });
+    var tbody = qs("#tbodySys");
+    if (tbody){
+      tbody.innerHTML = "";
+      for (var i=0;i<r.systems.length;i++){
+        var s = r.systems[i];
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
+        td1.textContent = s.label;
+        td2.textContent = fmtGBP(s.cost);
+        tr.appendChild(td1); tr.appendChild(td2);
+        tbody.appendChild(tr);
+      }
+    }
 
-    qs("#btnExport").onclick = () => exportCSV(r);
-    qs("#btnPrint").onclick  = () => window.print();
-    qs("#btnRestart").onclick = () => window.location.reload();
+    var be = qs("#btnExport");
+    var bp = qs("#btnPrint");
+    var br = qs("#btnRestart");
+    if (be) be.onclick = function(){ exportCSV(r); };
+    if (bp) bp.onclick = function(){ window.print(); };
+    if (br) br.onclick = function(){ window.location.reload(); };
   }
 
-  // --- CSV Export ---
-  function exportCSV(r) {
-    const rows = [["System","Estimate (ex VAT)"]];
-    r.systems.forEach(s => rows.push([s.label, s.cost]));
+  // CSV export
+  function exportCSV(r){
+    var rows = [["System","Estimate (ex VAT)"]];
+    for (var i=0;i<r.systems.length;i++){
+      rows.push([r.systems[i].label, r.systems[i].cost]);
+    }
     rows.push(["Base", r.base]);
     rows.push(["Low estimate", r.low]);
     rows.push(["High estimate", r.high]);
 
-    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+    var csv = "";
+    for (var rix=0; rix<rows.length; rix++){
+      var row = rows[rix];
+      for (var c=0;c<row.length;c++){
+        var cell = String(row[c]).replace(/"/g,'""');
+        row[c] = '"' + cell + '"';
+      }
+      csv += row.join(",") + "\n";
+    }
+    var blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
     a.href = url; a.download = "sona-budget-estimate.csv";
     document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
   }
-
 });
