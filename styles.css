@@ -1,19 +1,16 @@
-/* ===========================================
-   SONA — Home Technology Budget Calculator
-   Clean consolidated stylesheet
-   =========================================== */
+/* ===============================
+   SONA Calculator — Perfectly Centered Stages
+   =============================== */
 
-/* --------------------
-   Theme & Typography
-   -------------------- */
+/* Variables */
 :root {
-  --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 45%, #0e0e0e 100%);
+  --bg-gradient: linear-gradient(135deg, #141414 0%, #191782 50%, #671782 100%);
   --ink: #ffffff;
-  --muted: rgba(255,255,255,0.72);
-  --line: rgba(255,255,255,0.25);
+  --muted: rgba(255, 255, 255, 0.7);
+  --line: rgba(255, 255, 255, 0.25);
   --radius: 30px;
 
-  /* Adobe Fonts: Plantin family (from your Typekit) */
+  /* Adobe Plantin family from your kit */
   --font-plantin: "plantin", serif;
   --font-light: var(--font-plantin);
   --font-regular: var(--font-plantin);
@@ -23,9 +20,7 @@
   --font: var(--font-regular);
 }
 
-/* --------------
-   Page baseline
-   -------------- */
+/* Page background + base typography */
 html, body {
   height: 100%;
   margin: 0;
@@ -33,37 +28,37 @@ html, body {
   font-family: var(--font);
   font-weight: 400;
   background: var(--bg-gradient);
-  overflow-x: hidden;
+  overflow: hidden; /* prevent stray scrollbars; individual stages are centered */
 }
 
-/* One “stage” that everything sits in */
+/* === Single centering stage for EVERYTHING === */
 .wrap {
-  position: relative;
+  position: relative;     /* anchors absolute children */
   width: 100%;
-  height: 100svh;  /* mobile-safe viewport height */
-  box-sizing: border-box;
+  height: 100vh;          /* full viewport; all stages sit inside this */
   background: transparent;
+  box-sizing: border-box;
 }
 
-/* -------------------------------------------
-   Stages: Welcome / Wizard / Summary overlays
-   ------------------------------------------- */
+/* Each “page” (welcome, wizard, summary) occupies the same centered slot */
 .welcome,
 #wizard,
 .summary {
   position: absolute;
-  inset: 0;               /* fill the stage */
+  inset: 0;                         /* fill .wrap */
   display: grid;
-  place-items: center;    /* perfect vertical + horizontal centering */
+  place-items: center;              /* perfect vertical + horizontal centering */
   padding: 0 20px;
   background: transparent !important;
-  border: 0;
-  box-shadow: none;
+  border: 0 !important;
+  box-shadow: none !important;
 
-  transition: opacity .6s ease, transform .6s ease;
+  /* cross-fade movement */
+  transition: opacity 0.6s ease, transform 0.6s ease;
   will-change: opacity, transform;
 }
 
+/* Hide inactive stage */
 .is-hidden {
   opacity: 0;
   visibility: hidden;
@@ -71,43 +66,36 @@ html, body {
   transform: translateY(6px);
 }
 
-/* Constrain inner width for all stages */
+/* Show active stage */
+.welcome:not(.is-hidden),
+#wizard:not(.is-hidden),
+.summary:not(.is-hidden) {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Constrain inner content width on each stage */
 .welcome-inner,
 .wizard,
-.summary-inner,
+.summary > .summary-inner,
 #summary > div,
 #wizard > div {
   width: min(720px, 100%);
   margin: 0 auto;
 }
 
-/* ---------
-   Welcome
-   --------- */
-.sona-logo {
-  width: clamp(140px, 18vw, 220px);
-  height: auto;
-  display: block;
-  margin: 0 auto 28px auto;
-  opacity: 0;
-  transform: translateY(-10px) scale(0.98);
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
-  animation: logoFadeIn 2.5s ease forwards;
-  animation-delay: .2s;
-}
-
+/* ===========================================
+   Welcome Screen
+   =========================================== */
+.welcome-inner { text-align: center; }
 .welcome .title {
   font-family: var(--font-light);
   font-weight: 300;
+   font-style: italic;
   font-size: clamp(30px, 3vw, 46px);
   margin-bottom: 16px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: titleFadeIn 2.8s ease forwards;
-  animation-delay: 1.6s;
-  text-align: center;
 }
-
 .welcome .sub {
   font-family: var(--font-regular);
   font-weight: 400;
@@ -115,68 +103,25 @@ html, body {
   color: var(--muted);
   margin-bottom: 36px;
   line-height: 1.5;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: subFadeIn 2.8s ease forwards;
-  animation-delay: 2.8s;
-  text-align: center;
 }
-
-/* Start button */
-.start-btn,
-.footer button {
-  position: relative;
-  overflow: hidden;
+.start-btn {
+  font-family: var(--font-regular);
+  font-weight: 600;
+   font-style: italic;
   background: transparent;
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 10px 26px;
+  padding: 12px 36px;
   font-size: 16px;
   cursor: pointer;
   transition: all .25s ease;
 }
+.start-btn:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
 
-.start-btn:hover,
-.footer button:hover {
-  border-color: rgba(255,255,255,0.4);
-  transform: translateY(-1px);
-}
-
-.start-btn:active,
-.footer button:active {
-  transform: translateY(0);
-  opacity: .9;
-}
-
-/* Responsive tweaks for logo */
-@media (max-width: 600px) {
-  .sona-logo { width: clamp(120px, 40vw, 160px); margin-bottom: 22px; }
-}
-@media (min-width: 1400px) {
-  .sona-logo { width: 240px; margin-bottom: 36px; }
-}
-
-/* Cinematic keyframes */
-@keyframes logoFadeIn {
-  0% { opacity: 0; transform: translateY(-10px) scale(0.98); }
-  60% { opacity: 0.9; transform: translateY(0) scale(1); }
-  100% { opacity: 0.95; transform: translateY(0) scale(1); }
-}
-@keyframes titleFadeIn {
-  0% { opacity: 0; transform: translateY(8px); }
-  40% { opacity: 0.7; transform: translateY(0); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes subFadeIn {
-  0% { opacity: 0; transform: translateY(8px); }
-  40% { opacity: 0.6; transform: translateY(0); }
-  100% { opacity: 0.9; transform: translateY(0); }
-}
-
-/* -------
-   Wizard
-   ------- */
+/* ===========================================
+   Wizard (one question at a time)
+   =========================================== */
 .wizard { text-align: center; }
 
 .progress {
@@ -185,10 +130,6 @@ html, body {
   text-align: center;
 }
 
-/* Hide the Step X / Y pill */
-.footer .pill { display: none !important; }
-
-/* Step visibility */
 .step {
   display: none;
   opacity: 0;
@@ -201,13 +142,11 @@ html, body {
   transform: translateY(0);
 }
 
-/* Question typography */
 .q-title {
   font-family: var(--font-light);
   font-weight: 300;
   font-size: clamp(22px, 2.5vw, 30px);
   margin-bottom: 18px;
-  text-align: center;
 }
 .q-help {
   font-family: var(--font-regular);
@@ -216,18 +155,17 @@ html, body {
   font-size: 16px;
   margin-top: 8px;
   margin-bottom: 20px;
-  text-align: center;
 }
 
-/* Inputs / selects / options */
+/* Inputs / options */
 .field {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   margin-bottom: 16px;
-  flex-wrap: wrap; /* mobile safe */
 }
+.field.two { gap: 12px; }
 .field input,
 .field select {
   background: transparent;
@@ -244,7 +182,6 @@ html, body {
 .field input:focus,
 .field select:focus { border-color: rgba(255,255,255,.5); }
 
-/* Options */
 .opt-list {
   display: flex;
   flex-direction: column;
@@ -267,10 +204,355 @@ html, body {
 .opt:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
 .opt input { accent-color: white; transform: scale(1.2); }
 
-/* Footer — Back left, Next right (with badge hidden) */
+/* Footer controls */
 .footer {
   display: flex;
-  justify-content: space-between;  /* back left / next right */
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.pill {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-family: var(--font-regular);
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: .1em;
+}
+button {
+  font-family: var(--font-semibold);
+  font-weight: 600;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 26px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+button:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
+button:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ===========================================
+   Summary
+   =========================================== */
+.summary { color: var(--ink); }
+.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
+.kpi { flex: 1 1 240px; }
+.kpi .lab {
+  font-family: var(--font-regular);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--muted);
+}
+.kpi .val {
+  font-family: var(--font-bold);
+  font-weight: 700;
+  font-size: 26px;
+  margin-top: 4px;
+}
+
+/*table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }*/
+table th, table td { border-bottom: 1px solid var(--line); padding: 8px 0; text-align: left; }
+table th {
+  font-family: var(--font-semibold);
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 14px;
+}
+table td {
+  font-family: var(--font-regular);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.note {
+  font-family: var(--font-regular);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .welcome, #wizard, .summary { transition: none !important; transform: none !important; }
+}
+/* === Summary stage fixes (center everything + constrain width) === */
+
+/* Center the whole summary stack vertically & horizontally */
+.summary {
+  position: absolute;   /* keep it in the same 'stage' as welcome/wizard */
+  inset: 0;
+  display: flex;        /* use flex instead of grid here so the whole group centers */
+  flex-direction: column;
+  justify-content: center;  /* vertical centering */
+  align-items: center;      /* horizontal centering */
+  padding: 0 20px;
+  background: transparent !important;
+}
+
+/* Constrain every direct child (including the table) to the same container width */
+.summary > * {
+  max-width: 800px;     /* matches your KPI/table content width */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Keep the table within the container and aligned with headings */
+.summary table {
+  width: 100%;          /* fill the 800px container, not the full viewport */
+  margin: 0 auto 20px auto;
+  border-collapse: collapse;
+}
+
+/* Optional: align the very first header row with the same container rules */
+.summary > div:first-child {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* If you want the summary text block to read left but still be centered overall */
+.summary {
+  text-align: left;
+}
+/* === SUMMARY: center the entire group, constrain width, align with header === */
+
+/* Make summary occupy the same full-height stage as welcome/wizard */
+.summary{
+  position: absolute;      /* overlay inside .wrap */
+  inset: 0;                /* fill the stage */
+  display: grid;           /* grid centering works for the whole stack */
+  min-height: 100%;        /* full height of the stage */
+  place-content: center;   /* center the WHOLE content block vertically + horizontally */
+  justify-items: center;   /* center each row horizontally */
+  padding: 0 20px;
+  background: transparent !important;
+  text-align: left;        /* keep text left-aligned inside the centered block */
+}
+
+/* Constrain every direct child to the same container width */
+.summary > *{
+  max-width: 800px;        /* matches your header/KPI/table width */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure the table stays within the same container width (no full-bleed lines) */
+.summary table{
+  width: 100%;
+  margin: 0 auto 20px auto;
+  border-collapse: collapse;
+}
+
+/* Optional: if any top row wrapper needs the same constraint explicitly */
+.summary > div:first-child{
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* ===========================================
+   SONA Logo + Title Cinematic Fade Sequence
+   =========================================== */
+
+.sona-logo {
+  width: clamp(140px, 18vw, 220px);
+  height: auto;
+  display: block;
+  margin: 0 auto 28px auto;
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  animation: logoFadeIn 2.5s ease forwards;
+  animation-delay: 0.2s; /* starts right away */
+}
+
+.welcome .title {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: titleFadeIn 2.8s ease forwards;
+  animation-delay: 1.6s; /* starts after logo begins fading in */
+}
+
+.welcome .sub {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: subFadeIn 2.8s ease forwards;
+  animation-delay: 2.8s; /* comes in last for layering effect */
+}
+
+/* Keyframes for smooth motion */
+@keyframes logoFadeIn {
+  0% { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  60% { opacity: 0.9; transform: translateY(0) scale(1); }
+  100% { opacity: 0.95; transform: translateY(0) scale(1); }
+}
+
+@keyframes titleFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  40% { opacity: 0.7; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes subFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  40% { opacity: 0.6; transform: translateY(0); }
+  100% { opacity: 0.9; transform: translateY(0); }
+}
+
+/* Responsive logo sizing */
+@media (max-width: 600px) {
+  .sona-logo {
+    width: clamp(120px, 40vw, 160px);
+    margin-bottom: 22px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .sona-logo {
+    width: 240px;
+    margin-bottom: 36px;
+  }
+}
+/* Remove the Step X / Y indicator in the wizard footer */
+.footer .pill {
+  display: none !important;
+}
+
+/* =========================
+   MOBILE FIX PACK (append)
+   ========================= */
+
+/* 1) Robust sizing: prevent width creep */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2) Use small-viewport units so iOS address bar doesn't break centering */
+.wrap {
+  height: 100svh;   /* replaces 100vh for mobile correctness */
+}
+
+/* Our overlay stages should also use small-viewport height */
+.welcome,
+#wizard,
+.summary {
+  min-height: 100svh;
+  max-width: 100vw;        /* never exceed viewport width */
+  padding-left: 20px;
+  padding-right: 20px;
+  overflow: hidden;        /* hide any tiny sub-pixel overflow */
+}
+
+/* 3) Constrain inner content perfectly on mobile */
+.welcome-inner,
+.wizard,
+.summary > .summary-inner,
+#summary > div,
+#wizard > div {
+  width: min(720px, 100%);
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 4) Inputs/selects: wrap instead of pushing off-screen */
+.field {
+  flex-wrap: wrap;
+}
+
+/* On narrow screens, inputs/selects go full width */
+@media (max-width: 480px) {
+  .field input,
+  .field select {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* 5) Option pills: allow wrapping & prevent overflow */
+.opt {
+  max-width: 100%;
+  white-space: normal;   /* allow text to wrap */
+  line-height: 1.3;
+}
+
+/* 6) Safety: absolutely prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
+
+/* 7) Summary table: keep within viewport on mobile */
+@media (max-width: 480px) {
+  .summary > * {
+    width: 100%;
+    max-width: 100%;
+  }
+  .summary table {
+    table-layout: fixed;
+    word-wrap: break-word;
+  }
+  .summary table th,
+  .summary table td {
+    padding-right: 8px;
+  }
+}
+
+/* 8) If any element still nudges the layout, clamp container width tightly */
+@media (max-width: 380px) {
+  .welcome-inner,
+  .wizard,
+  .summary > .summary-inner,
+  #summary > div,
+  #wizard > div {
+    width: 92vw;   /* a touch of breathing room within viewport */
+  }
+}
+/* =========================
+   FOOTER ALIGNMENT FIX
+   ========================= */
+
+/* Remove space for the left badge and align nav buttons to the right */
+.footer {
+  display: flex;
+  justify-content: flex-end;   /* all content moves to the right */
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  margin-top: 30px;
+}
+
+/* Adjust spacing between Back and Next */
+.footer .nav {
+  display: flex;
+  gap: 12px;                   /* space between buttons */
+}
+
+/* Ensure buttons stay visually balanced */
+.footer button {
+  min-width: 100px;
+  text-align: center;
+}
+/* ===========================================
+   FOOTER ALIGNMENT — Back Left / Next Right (with inner flex wrapper)
+   =========================================== */
+
+.footer {
+  display: flex;
+  justify-content: space-between;   /* pushes the inner flex group to the right edge */
   align-items: center;
   border-top: 1px solid var(--line);
   padding-top: 20px;
@@ -281,89 +563,134 @@ html, body {
   margin-right: auto;
 }
 
-/* Button typography per request */
-#btnBack {
+/* Reset the inner button group so both buttons don't hug the left */
+.footer > div {
+  display: flex;
+  justify-content: flex-end;        /* buttons align to the right */
+  flex: 1;
+}
+
+/* Back button on far left */
+.footer #btnBack {
+  margin-right: auto;               /* pushes Back to the left side of the footer */
+}
+
+/* Next button stays on the far right */
+.footer #btnNext {
+  margin-left: auto;
+}
+
+/* Keep consistent sizing */
+.footer button {
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Slightly larger hit area on mobile */
+@media (max-width: 600px) {
+  .footer {
+    padding-top: 24px;
+  }
+  .footer button {
+    min-width: 120px;
+  }
+}
+/* ===========================================
+   FOOTER BUTTON FONT WEIGHTS
+   =========================================== */
+
+/* Back button – Plantin Light */
+.footer #btnBack {
   font-family: var(--font-light);
   font-weight: 300;
-  letter-spacing: .02em;
+  font-style: normal;
+  letter-spacing: 0.02em;
 }
-#btnNext {
+
+/* Next button – Plantin Regular */
+.footer #btnNext {
   font-family: var(--font-regular);
   font-weight: 400;
-  letter-spacing: .02em;
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
+/* ===========================================
+   FOOTER BUTTON HOVER ENHANCEMENTS
+   =========================================== */
+
+/* NEXT BUTTON — subtle brightness + lift */
+.footer #btnNext:hover {
+  background-color: rgba(255, 255, 255, 0.15);   /* soft glow effect */
+  border-color: rgba(255, 255, 255, 0.4);       /* slightly clearer edge */
+  transform: translateY(-2px);
+  transition: all 0.35s ease;
 }
 
-/* -------------
-   Mobile polish
-   ------------- */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-.welcome,
-#wizard,
-.summary {
-  min-height: 100svh;
-  max-width: 100vw;
-  overflow: hidden;
+/* BACK BUTTON — lighter, minimal movement */
+.footer #btnBack:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  transition: all 0.35s ease;
 }
 
-/* Narrow screens: inputs full width */
-@media (max-width: 480px) {
-  .field input,
-  .field select { width: 100%; max-width: 100%; }
+/* Active state (click) for both */
+.footer button:active {
+  transform: translateY(0);
+  opacity: 0.9;
 }
+/* ===========================================
+   REMOVE NUMBER INPUT SPINNERS
+   =========================================== */
 
-/* Remove number input spinners */
+/* Chrome, Safari, Edge, Opera */
 input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-input[type="number"] { -moz-appearance: textfield; appearance: none; }
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
-/* ------------
-   Summary page
-   ------------ */
-.summary { text-align: left; }
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 
-/* Centered column grid for all summary blocks */
-.summary > * {
+/* Optional: make sure number fields look consistent with others */
+input[type="number"] {
+  appearance: none;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-family: var(--font-regular);
+  font-size: 1rem;
+}
+/* ===========================================
+   SUMMARY LAYOUT ALIGNMENT FIX
+   =========================================== */
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: 800px;
+}
+
+/* Keep all child sections (kpis, tblsys, note) same width */
+.summary > *,
+#tblSys {
+  width: 100%;
+  max-width: 800px;     /* matches KPIs and note blocks */
   margin-left: auto;
   margin-right: auto;
-  box-sizing: border-box;
 }
 
-/* KPIs */
-.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
-.kpi { flex: 1 1 240px; }
-.kpi .lab { font-family: var(--font-regular); font-weight: 400; font-size: 15px; color: var(--muted); }
-.kpi .val { font-family: var(--font-bold); font-weight: 700; font-size: 26px; margin-top: 4px; }
-
-/* Table alignment — use exact same column width */
+/* Force the table itself to obey same padding grid */
 #tblSys {
-  display: table;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto 20px auto;
   border-collapse: collapse;
-  table-layout: fixed;   /* prevents long labels pushing width */
-  box-sizing: border-box;
-}
-
-/* Ensure TBODY uses proper table semantics (prevents overflow) */
-#tblSys thead { display: table-header-group; }
-#tblSys tbody { display: table-row-group; }
-#tblSys tr    { display: table-row; }
-
-/* Dynamic body safety reset */
-#tbodySys {
-  display: table-row-group;
-  width: auto;
-  max-width: none;
-  padding: 0;
-  margin: 0;
-  box-sizing: content-box;
-  overflow: visible;
+  text-align: left;
+  table-layout: fixed;  /* prevent expansion by long labels */
 }
 
 #tblSys th,
@@ -375,22 +702,59 @@ input[type="number"] { -moz-appearance: textfield; appearance: none; }
   word-wrap: break-word;
 }
 
-/* Note alignment matches column */
+/* Optional: keep note text perfectly aligned to table edge */
 .summary .note {
   max-width: 800px;
   margin: 0 auto;
   text-align: left;
   padding-left: 16px;
   padding-right: 16px;
-  color: var(--muted);
-  font-style: italic;
-  font-size: 14px;
-  line-height: 1.5;
+}
+/* ===========================================
+   SUMMARY TABLE HARD ALIGNMENT FIX
+   =========================================== */
+
+/* 1) Make the summary a centered column and clamp child width */
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-/* ------------
-   Accessibility
-   ------------ */
-@media (prefers-reduced-motion: reduce) {
-  .welcome, #wizard, .summary, .step { transition: none !important; transform: none !important; }
+/* 2) Every direct child uses the same content width */
+.summary > * {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* 3) Clamp the table EXACTLY like the others (id must match your HTML: id="tblSys") */
+#tblSys {
+  width: 100% !important;
+  max-width: 800px !important;
+  margin: 0 auto 20px auto !important;
+  border-collapse: collapse;
+  table-layout: fixed;      /* stops long labels expanding width */
+  box-sizing: border-box;
+}
+
+/* 4) Make the table’s inner padding match other blocks (so edges line up) */
+#tblSys th,
+#tblSys td {
+  padding: 10px 16px;       /* 16px matches common content padding */
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+/* 5) Ensure KPI and note blocks use the same inner padding for perfect visual alignment */
+.summary .kpis,
+.summary .note {
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
 }
