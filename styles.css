@@ -1,5 +1,5 @@
 /* ===============================
-   SONA Calculator — Clean centred CSS
+   SONA Calculator — Perfectly Centered Stages
    =============================== */
 
 /* Variables */
@@ -27,53 +27,68 @@ html, body {
   color: var(--ink);
   font-family: var(--font);
   font-weight: 400;
-  background: var(--bg-gradient);    /* gradient lives on the page, not containers */
-  overflow-x: hidden;
+  background: var(--bg-gradient);
+  overflow: hidden; /* prevent stray scrollbars; individual stages are centered */
 }
 
-/* Single centring context for ALL content */
+/* === Single centering stage for EVERYTHING === */
 .wrap {
-  min-height: 100vh;
-  display: grid;                     /* identical vertical & horizontal centring */
-  place-items: center;
-  padding: 40px 20px;
+  position: relative;     /* anchors absolute children */
+  width: 100%;
+  height: 100vh;          /* full viewport; all stages sit inside this */
+  background: transparent;
   box-sizing: border-box;
-  background: transparent;           /* ensure no “block” background */
 }
 
-/* Welcome and Wizard share the same frame width */
+/* Each “page” (welcome, wizard, summary) occupies the same centered slot */
 .welcome,
 #wizard,
 .summary {
-  width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  background: transparent;           /* no panel/background */
-  box-shadow: none;
-  border: 0;
-}
+  position: absolute;
+  inset: 0;                         /* fill .wrap */
+  display: grid;
+  place-items: center;              /* perfect vertical + horizontal centering */
+  padding: 0 20px;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
 
-/* Cross-fade for switching Welcome ↔ Wizard */
-.welcome,
-#wizard {
+  /* cross-fade movement */
   transition: opacity 0.6s ease, transform 0.6s ease;
   will-change: opacity, transform;
 }
+
+/* Hide inactive stage */
 .is-hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transform: translateY(6px);
 }
+
+/* Show active stage */
 .welcome:not(.is-hidden),
-#wizard:not(.is-hidden) {
+#wizard:not(.is-hidden),
+.summary:not(.is-hidden) {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-/* Welcome screen */
-.welcome-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+/* Constrain inner content width on each stage */
+.welcome-inner,
+.wizard,
+.summary > .summary-inner,
+#summary > div,
+#wizard > div {
+  width: min(720px, 100%);
+  margin: 0 auto;
+}
+
+/* ===========================================
+   Welcome Screen
+   =========================================== */
+.welcome-inner { text-align: center; }
 .welcome .title {
   font-family: var(--font-light);
   font-weight: 300;
@@ -102,11 +117,17 @@ html, body {
 }
 .start-btn:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
 
-/* Wizard */
+/* ===========================================
+   Wizard (one question at a time)
+   =========================================== */
 .wizard { text-align: center; }
-.progress { margin-bottom: 20px; color: var(--muted); }
 
-/* One-question-at-a-time */
+.progress {
+  margin-bottom: 20px;
+  color: var(--muted);
+  text-align: center;
+}
+
 .step {
   display: none;
   opacity: 0;
@@ -119,7 +140,6 @@ html, body {
   transform: translateY(0);
 }
 
-/* Question typography */
 .q-title {
   font-family: var(--font-light);
   font-weight: 300;
@@ -216,8 +236,10 @@ button {
 button:hover { border-color: rgba(255,255,255,.4); transform: translateY(-1px); }
 button:disabled { opacity: .4; cursor: not-allowed; }
 
-/* Summary */
-.summary { max-width: 800px; text-align: left; color: var(--ink); }
+/* ===========================================
+   Summary
+   =========================================== */
+.summary { color: var(--ink); }
 .kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
 .kpi { flex: 1 1 240px; }
 .kpi .lab {
@@ -258,5 +280,5 @@ table td {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .welcome, #wizard, .step { transition: none !important; transform: none !important; }
+  .welcome, #wizard, .summary { transition: none !important; transform: none !important; }
 }
