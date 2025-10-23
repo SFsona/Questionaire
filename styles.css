@@ -773,13 +773,13 @@ input[type="number"] {
 
 /* Fine-tune internal block spacing for consistent visual flow */
 .summary .kpis {
-  margin-top: 8px;     /* small space after the main title */
-  margin-bottom: 24px; /* extra room before the table */
+  margin-top: 32px;     /* small space after the main title */
+  margin-bottom: 32px; /* extra room before the table */
 }
 
 #tblSys {
-  margin-top: 16px;    /* spacing above the table */
-  margin-bottom: 28px; /* spacing before the note or next block */
+  margin-top: 32px;    /* spacing above the table */
+  margin-bottom: 32px; /* spacing before the note or next block */
 }
 
 /* Optional: adjust note placement for harmony */
