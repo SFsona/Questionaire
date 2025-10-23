@@ -787,3 +787,66 @@ input[type="number"] {
   margin-top: 12px;
   line-height: 1.5;
 }
+/* ===========================================
+   SUMMARY — ENABLE SCROLLING (mobile-friendly)
+   =========================================== */
+
+/* 1) Allow vertical scroll on the page (we previously hid it) */
+html, body {
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  height: auto;            /* avoid locking to 100% if content is taller */
+  min-height: 100%;
+}
+
+/* 2) Let the summary stage scroll even when centered as an overlay */
+.summary {
+  /* keep your centered overlay behavior on larger screens */
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+
+  /* scrolling inside the stage */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 40px 0;         /* breathing room so content isn't flush to edges */
+}
+
+/* 3) Ensure inner blocks don't force unexpected widths */
+.summary > * {
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* 4) On small viewports, switch summary to normal flow so the whole page scrolls */
+@media (max-height: 740px), (max-width: 600px) {
+  .wrap {
+    height: auto;
+    min-height: 100svh;      /* mobile-safe viewport unit */
+    display: block;          /* drop grid centering to allow natural scroll */
+    padding: 20px 0;
+  }
+
+  .summary {
+    position: static;        /* no overlay; participate in document flow */
+    display: block;
+    overflow: visible;       /* page handles scrolling */
+    padding: 20px 16px;
+    margin: 0 auto;
+  }
+
+  /* Keep welcome/wizard unaffected but prevent accidental clipping */
+  .welcome, #wizard {
+    overflow: visible;
+  }
+}
+
+/* 5) Safety: if earlier styles hid overflow on stages, undo it */
+.welcome, #wizard, .summary {
+  overflow: visible;  /* default; summary gets auto in the block above */
+}
