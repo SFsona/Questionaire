@@ -323,3 +323,40 @@ table td {
 .summary {
   text-align: left;
 }
+/* === SUMMARY: center the entire group, constrain width, align with header === */
+
+/* Make summary occupy the same full-height stage as welcome/wizard */
+.summary{
+  position: absolute;      /* overlay inside .wrap */
+  inset: 0;                /* fill the stage */
+  display: grid;           /* grid centering works for the whole stack */
+  min-height: 100%;        /* full height of the stage */
+  place-content: center;   /* center the WHOLE content block vertically + horizontally */
+  justify-items: center;   /* center each row horizontally */
+  padding: 0 20px;
+  background: transparent !important;
+  text-align: left;        /* keep text left-aligned inside the centered block */
+}
+
+/* Constrain every direct child to the same container width */
+.summary > *{
+  max-width: 800px;        /* matches your header/KPI/table width */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure the table stays within the same container width (no full-bleed lines) */
+.summary table{
+  width: 100%;
+  margin: 0 auto 20px auto;
+  border-collapse: collapse;
+}
+
+/* Optional: if any top row wrapper needs the same constraint explicitly */
+.summary > div:first-child{
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
