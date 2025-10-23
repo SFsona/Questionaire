@@ -48,18 +48,34 @@ html, body {
 
 /* Main wrapper sits in the centered viewport */
 .wrap {
+  min-height: auto;          /* was: 100vh */
   width: 100%;
   max-width: 720px;
-  padding: 40px 20px;
+  margin: 10vh auto;         /* centers vertically with nice top/bottom breathing room */
+  padding: 0 20px;
+  display: block;            /* no flex box here = no full-height column look */
   text-align: center;
   box-sizing: border-box;
 }
 
-/* Welcome + Wizard cross-fade (no layout shift) */
+/* Ensure inner sections remain transparent (no box look) */
 .welcome,
-#wizard {
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  will-change: opacity, transform;
+#wizard,
+.summary {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* Keep the wizard width constrained to the container */
+.wizard {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Optional: on very small heights, reduce top/bottom margin so the form never feels cramped */
+@media (max-height: 700px) {
+  .wrap { margin: 6vh auto; }
 }
 
 .is-hidden {
