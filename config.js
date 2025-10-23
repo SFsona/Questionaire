@@ -1,49 +1,86 @@
-// ===== COST & RANGE CONFIG ONLY =====
+/* ==============================================
+   SONA Home Technology Budget Calculator
+   Configuration & Cost Model
+   ============================================== */
+
 window.SONA_DEFAULTS = {
   currency: "GBP",
-  powerPct: 0.06,   // Containment & Power as % of other systems (ex VAT)
-  apPerSqm: 110,    // m² per Wi-Fi access point
-  lowAdjPct: -0.10, // range: -10%
-  highAdjPct: 0.15  // range: +15%
+  apPerSqm: 110,          // Wi-Fi access point density
+  powerPct: 0.06,         // 6% containment & power management
+  lowAdjPct: 0.0,         // adjustment for low estimate (base)
+  highAdjPct: 0.10        // adjustment for high estimate (+10%)
 };
 
+/* ----------------------------------------------
+   SYSTEM COST MODEL
+   ---------------------------------------------- */
 window.SONA_COST_MODEL = {
-  infrastructure: { perSqm: 22 },
 
-  connectivity: { 
-    router: 2000, 
-    switchSmall: 1000,   // ≤ 10,000 ft²
-    switchLarge: 2000,   // > 10,000 ft²
-    ap: 400
+  /* === INFRASTRUCTURE === */
+  infrastructure: {
+    perSqm: 22            // £22 per m² cabling/infrastructure
   },
 
-  access: { audioOnly: 600, audioVideo: 2000 },
+  /* === CONNECTIVITY === */
+  connectivity: {
+    router: 2000,
+    switchSmall: 1000,    // under 10,000 ft²
+    switchLarge: 2000,    // over 10,000 ft²
+    ap: 400               // per Wi-Fi access point
+  },
 
+  /* === ACCESS & INTERCOM === */
+  access: {
+    audioOnly: 600,       // per audio-only entry
+    audioVideo: 2000      // per audio+video entry
+  },
+
+  /* === LIGHTING CONTROL === */
   lightingControl: {
+    // keypads
     keypadCost: 500,
     keypadRules: {
       baseBySqft: [
         { maxSqft: 10000, qty: 9 },
         { maxSqft: 20000, qty: 15 },
-        { maxSqft: Infinity, qty: 22 }
+        { maxSqft: 999999, qty: 22 }
       ],
-      perBedroom: 4,  // ENTIRE property scope
-      perLeisure: 1
+      perBedroom: 4,     // per bedroom set
+      perLeisure: 1      // per leisure/entertaining room
     },
-    processor: 3000,
+    // control equipment (based on size)
     equipmentBySqft: [
       { maxSqft: 10000, cost: 9000 },
       { maxSqft: 20000, cost: 13000 },
-      { maxSqft: Infinity, cost: 18000 }
+      { maxSqft: 999999, cost: 18000 }
     ],
-    scopeMultiplier: { entire: 1.0, main: 0.55 }
+    processor: 3000,
+    // scope multipliers
+    scopeMultiplier: {
+      entire: 1.0,
+      main: 0.7
+    }
   },
 
-  lightingFittings: { perRoom: 1800 },
-  shading: { perBlind: 1500 },
+  /* === HIGH QUALITY ARCHITECTURAL LIGHTING === */
+  lightingFittings: {
+    perRoom: 1800         // per room
+  },
 
-  audio: { standard: 1700, advanced: 3000, invisible: 4000, surround: 4000 },
+  /* === SHADING === */
+  shading: {
+    perBlind: 1500        // per shade / blind / curtain track
+  },
 
+  /* === AUDIO === */
+  audio: {
+    standard: 1700,
+    advanced: 3000,
+    invisible: 4000,
+    surround: 4000
+  },
+
+  /* === VIDEO === */
   video: {
     upTo55: 1500,
     over65: 2500,
@@ -52,5 +89,10 @@ window.SONA_COST_MODEL = {
     centralPerZoneAdd: 1500
   },
 
-  cinema: { none:0, entry:25000, mid:70000, high:150000 }
+  /* === CINEMA / MEDIA ROOM === */
+  cinema: {
+    entry: 25000,
+    mid: 70000,
+    high: 150000
+  }
 };
