@@ -5,39 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home Technology Budget Calculator</title>
 
-  <!-- If your site already loads MT Plantin Pro, remove this -->
-  <link rel="stylesheet" href="https://use.typekit.net/kxn3txd.css">
-
+  <!-- Load your core styles -->
+  <link rel="stylesheet" href="https://use.typekit.net/kxn3txd.css" />
   <link rel="stylesheet" href="styles.css" />
+
 </head>
+
 <body>
   <div class="wrap">
-    <div class="header">
-      <div>
+
+    <!-- ===============================
+         WELCOME SCREEN
+    ================================== -->
+    <div class="welcome" id="welcome">
+      <div class="welcome-inner">
         <div class="title">Home Technology Budget Calculator</div>
-        <div class="sub">A continuation of your SONA Studio experience — we’ll present a refined Low–High estimate (ex VAT).</div>
+        <div class="sub">
+          Begin your personalised budget journey — inspired by your SONA Studio experience.
+        </div>
+        <button id="btnStart" type="button" class="start-btn">Get Started</button>
       </div>
-      <!-- (no ROM tool badge) -->
     </div>
 
-    <!-- WELCOME SCREEN -->
-<div class="welcome" id="welcome">
-  <div class="welcome-inner">
-    <div class="title">Home Technology Budget Calculator</div>
-    <div class="sub">
-      Begin your personalised budget journey — inspired by your SONA Studio experience.
-    </div>
-    <button id="btnStart" type="button" class="start-btn">Get Started</button>
-  </div>
-</div>
-    
+    <!-- ===============================
+         QUESTIONNAIRE WIZARD
+    ================================== -->
     <div class="wizard is-hidden" id="wizard">
-  ...
-</div>
+      <div class="progress">
+        <div class="bartext" id="bartext">STEP 1 / 16</div>
+      </div>
 
-      <div class="progress"><div class="bartext" id="bartext">STEP 1 / 16</div></div>
-
-      <!-- One question per screen -->
+      <!-- === Step 1 === -->
       <div class="step active" data-step="1">
         <div class="q-title">Tell us a little about your home</div>
         <div class="q-help">Approximately how large is the property?</div>
@@ -51,30 +49,35 @@
         <div class="q-help" style="margin-top:8px;">Enter in square metres or square feet — whichever feels most natural.</div>
       </div>
 
+      <!-- === Step 2 === -->
       <div class="step" data-step="2">
         <div class="q-title">Bedrooms</div>
         <div class="q-help">How many bedrooms does the property have?</div>
         <div class="field"><input type="number" id="bedrooms" min="1" step="1" placeholder="e.g. 4"></div>
       </div>
 
+      <!-- === Step 3 === -->
       <div class="step" data-step="3">
         <div class="q-title">Leisure &amp; entertaining</div>
         <div class="q-help">Beyond your main living spaces, how many dedicated leisure or entertaining rooms are there (gym, pool, spa, games room, bar)?</div>
         <div class="field"><input type="number" id="leisure" min="0" step="1" placeholder="e.g. 2"></div>
       </div>
 
+      <!-- === Step 4 === -->
       <div class="step" data-step="4">
         <div class="q-title">Access &amp; Intercom</div>
         <div class="q-help">How many audio-only entry locations?</div>
         <div class="field"><input type="number" id="entryAudio" min="0" step="1" value="0"></div>
       </div>
 
+      <!-- === Step 5 === -->
       <div class="step" data-step="5">
         <div class="q-title">Access &amp; Intercom</div>
         <div class="q-help">How many audio &amp; video entry locations?</div>
         <div class="field"><input type="number" id="entryAV" min="0" step="1" value="1"></div>
       </div>
 
+      <!-- === Step 6 === -->
       <div class="step" data-step="6">
         <div class="q-title">Lighting Control</div>
         <div class="q-help">Where would you like the benefit of lighting control?</div>
@@ -84,6 +87,7 @@
         </div>
       </div>
 
+      <!-- === Step 7 === -->
       <div class="step" data-step="7">
         <div class="q-title">High Quality Architectural Lighting</div>
         <div class="q-help">How many rooms would you like to include?</div>
@@ -93,6 +97,7 @@
         </label>
       </div>
 
+      <!-- === Step 8 === -->
       <div class="step" data-step="8">
         <div class="q-title">Motorised Shading</div>
         <div class="q-help">How many window treatments would you like to automate?</div>
@@ -100,6 +105,7 @@
         <div class="q-help" style="margin-top:8px;">Include curtains, blinds and skylights. Count each shade individually.</div>
       </div>
 
+      <!-- === Step 9–16 (Audio, Video, Cinema etc) -->
       <div class="step" data-step="9">
         <div class="q-title">Audio — Standard zones</div>
         <div class="q-help">Discreet in-ceiling speakers (as in the Studio reception) for background listening.</div>
@@ -137,7 +143,7 @@
       </div>
 
       <div class="step" data-step="15">
-        <div class="q-title">Video sources</div>
+        <div class="q-title">Video Sources</div>
         <div class="q-help">How would you like your video sources to work?</div>
         <div class="opt-list">
           <label class="opt"><input type="radio" name="videoDist" value="local" checked> Local sources in each room</label>
@@ -146,7 +152,7 @@
       </div>
 
       <div class="step" data-step="16">
-        <div class="q-title">Dedicated cinema or media room</div>
+        <div class="q-title">Dedicated Cinema or Media Room</div>
         <div class="q-help">If you have one, what level of performance do you imagine?</div>
         <div class="opt-list">
           <label class="opt"><input type="radio" name="cinemaLevel" value="none" checked> No dedicated cinema / media room</label>
@@ -156,6 +162,7 @@
         </div>
       </div>
 
+      <!-- === Wizard Footer === -->
       <div class="footer">
         <span class="pill" id="stepBadge">STEP 1 / 16</span>
         <div style="display:flex; gap:10px;">
@@ -165,19 +172,21 @@
       </div>
     </div>
 
-    <!-- SUMMARY -->
+    <!-- ===============================
+         SUMMARY PAGE
+    ================================== -->
     <div class="summary" id="summary" style="display:none;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div>
           <h3 style="margin:0;">Estimate Summary (ex VAT)</h3>
-          <div class="fadein" style="color:var(--muted); font-size:13px; margin-top:2px;">Based on your selections</div>
+          <div style="color:rgba(255,255,255,0.7);font-size:13px;margin-top:2px;">Based on your selections</div>
         </div>
-        <span class="pill" style="letter-spacing:.15em; color:var(--muted);">ROM only</span>
+        <span class="pill" style="letter-spacing:.15em;color:rgba(255,255,255,0.6);">ROM only</span>
       </div>
 
       <div class="kpis">
-        <div class="kpi fadein-delayed"><div class="lab">Low estimate (ex VAT)</div><div class="val" id="kpiLow">–</div></div>
-        <div class="kpi fadein-delayed"><div class="lab">High estimate (ex VAT)</div><div class="val" id="kpiHigh">–</div></div>
+        <div class="kpi"><div class="lab">Low estimate (ex VAT)</div><div class="val" id="kpiLow">–</div></div>
+        <div class="kpi"><div class="lab">High estimate (ex VAT)</div><div class="val" id="kpiHigh">–</div></div>
       </div>
 
       <table id="tblSys">
@@ -196,7 +205,11 @@
       </div>
     </div>
   </div>
-  <script src="config.js"></script>
-  <script src="app.js"></script>
+
+  <!-- ===============================
+       Scripts
+  ================================== -->
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
