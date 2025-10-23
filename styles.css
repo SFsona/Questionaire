@@ -579,3 +579,56 @@ html, body {
     min-width: 120px;
   }
 }
+/* ===========================================
+   BUTTON HOVER — White Fill + Transparent Text
+   =========================================== */
+
+.footer button,
+.start-btn {
+  position: relative;
+  overflow: hidden;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: all 0.4s ease;
+}
+
+/* The white fill slides in on hover */
+.footer button::before,
+.start-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+/* Bring text above fill */
+.footer button span,
+.start-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover state */
+.footer button:hover::before,
+.start-btn:hover::before {
+  opacity: 1;
+}
+
+.footer button:hover,
+.start-btn:hover {
+  color: transparent;                /* text becomes transparent */
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Optional: active (click) state */
+.footer button:active,
+.start-btn:active {
+  transform: translateY(0);
+  opacity: 0.9;
+}
