@@ -667,38 +667,50 @@ input[type="number"] {
   font-size: 1rem;
 }
 /* ===========================================
-   SUMMARY TABLE ALIGNMENT FIX
+   SUMMARY LAYOUT ALIGNMENT FIX
    =========================================== */
 
-/* Constrain table width to match other summary elements */
-#tblsys {
+.summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: 800px;             /* same width as summary container */
-  margin: 0 auto 24px auto;     /* center horizontally + spacing below */
-  border-collapse: collapse;
-  text-align: left;
 }
 
-/* Ensure table headers and cells align cleanly within container */
+/* Keep all child sections (kpis, tblsys, note) same width */
+.summary > *,
+#tblsys {
+  width: 100%;
+  max-width: 800px;     /* matches KPIs and note blocks */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Force the table itself to obey same padding grid */
+#tblsys {
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed;  /* prevent expansion by long labels */
+}
+
 #tblsys th,
 #tblsys td {
   padding: 10px 16px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
   text-align: left;
   vertical-align: middle;
+  word-wrap: break-word;
 }
 
-/* Optional: fine-tune top spacing so it lines up with KPI and note blocks */
-.summary .kpis + #tblsys {
-  margin-top: 20px;
-}
-
-/* Keep note text aligned to same container width */
+/* Optional: keep note text perfectly aligned to table edge */
 .summary .note {
   max-width: 800px;
   margin: 0 auto;
   text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
 }
+
 /* ===========================================
    SUMMARY TABLE — SOFT EDGE LINES
    =========================================== */
@@ -706,9 +718,7 @@ input[type="number"] {
 /* Fade the horizontal lines on the summary table */
 #tblsys {
   position: relative;
-  width: 100%;
   max-width: 800px;
-  margin: 0 auto 24px auto;
   border-collapse: collapse;
   text-align: left;
   overflow: hidden; /* allows gradient masks to work cleanly */
