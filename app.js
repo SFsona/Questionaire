@@ -1,6 +1,13 @@
 // app.js — safe (no template strings), robust nav + full estimate
 document.addEventListener("DOMContentLoaded", function () {
-  // Boot flag so we can tell it loaded
+// --- Welcome screen logic ---
+var btnStart = document.getElementById("btnStart");
+if (btnStart) {
+  btnStart.addEventListener("click", function() {
+    document.getElementById("welcome").style.display = "none";
+    document.getElementById("wizard").style.display = "block";
+  });
+}  // Boot flag so we can tell it loaded
   window.SONA_BOOTSTRAPPED = true;
 
   var DEFAULTS = window.SONA_DEFAULTS || {};
