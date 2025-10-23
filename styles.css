@@ -1,6 +1,6 @@
 /* ===============================
    GLOBAL STYLES – SONA Calculator
-   (Option 2: fully centered layout)
+   Balanced centering + scroll
    =============================== */
 
 /* Variables */
@@ -13,69 +13,40 @@
 
   /* Adobe Plantin family from your kit */
   --font-plantin: "plantin", serif;
-
-  /* Plantin variants (all under 'plantin', controlled by weight/style) */
   --font-light: var(--font-plantin);
-  --font-light-italic: var(--font-plantin);
   --font-regular: var(--font-plantin);
-  --font-italic: var(--font-plantin);
   --font-semibold: var(--font-plantin);
-  --font-semibold-italic: var(--font-plantin);
   --font-bold: var(--font-plantin);
-  --font-bold-italic: var(--font-plantin);
-
-  /* default */
   --font: var(--font-regular);
 }
 
-/* Fully centered viewport container */
+/* Global layout */
 html, body {
-  height: 100%;
   margin: 0;
-  background: var(--bg-gradient);
-  color: var(--ink);
+  padding: 0;
+  min-height: 100%;
   font-family: var(--font);
   font-weight: 400;
-
-  /* Option 2 centering */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* Prevent stray x-scrollbars */
+  color: var(--ink);
+  background: var(--bg-gradient);
   overflow-x: hidden;
 }
 
-/* Main wrapper sits in the centered viewport */
+/* Container */
 .wrap {
-  min-height: auto;          /* was: 100vh */
   width: 100%;
   max-width: 720px;
-  margin: 10vh auto;         /* centers vertically with nice top/bottom breathing room */
+  margin: 10vh auto;               /* centers visually */
   padding: 0 20px;
-  display: block;            /* no flex box here = no full-height column look */
   text-align: center;
   box-sizing: border-box;
 }
 
-/* Ensure inner sections remain transparent (no box look) */
+/* Fade transitions for welcome + wizard */
 .welcome,
-#wizard,
-.summary {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-}
-
-/* Keep the wizard width constrained to the container */
-.wizard {
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-/* Optional: on very small heights, reduce top/bottom margin so the form never feels cramped */
-@media (max-height: 700px) {
-  .wrap { margin: 6vh auto; }
+#wizard {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
 }
 
 .is-hidden {
@@ -126,10 +97,9 @@ html, body {
   transform: translateY(-1px);
 }
 
-/* Wizard shell (clean, no box) */
+/* Wizard shell (no box) */
 .wizard {
   width: 100%;
-  max-width: 720px;
   text-align: center;
   background: transparent;
   border: none;
@@ -143,12 +113,12 @@ html, body {
   color: var(--muted);
 }
 
-/* Steps — one question at a time with soft fade */
-.step { 
+/* Steps */
+.step {
   display: none;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 .step.active {
   display: block;
@@ -162,7 +132,6 @@ html, body {
   font-size: clamp(22px, 2.5vw, 30px);
   margin-bottom: 18px;
 }
-
 .q-help {
   font-family: var(--font-regular);
   font-weight: 400;
@@ -172,7 +141,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-/* Fields / options */
+/* Fields / Options */
 .field {
   display: inline-flex;
   align-items: center;
@@ -195,7 +164,9 @@ html, body {
   appearance: none;
 }
 .field input:focus,
-.field select:focus { border-color: rgba(255,255,255,0.5); }
+.field select:focus {
+  border-color: rgba(255,255,255,0.5);
+}
 
 .opt-list {
   display: flex;
@@ -253,12 +224,26 @@ button {
   cursor: pointer;
   transition: all 0.25s ease;
 }
-button:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px); }
+button:hover {
+  border-color: rgba(255,255,255,0.4);
+  transform: translateY(-1px);
+}
 button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* Summary */
-.summary { max-width: 800px; text-align: left; color: var(--ink); margin: 0 auto; }
-.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; margin-bottom: 30px; }
+.summary {
+  max-width: 800px;
+  text-align: left;
+  color: var(--ink);
+  margin: 0 auto;
+}
+.kpis {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 .kpi { flex: 1 1 240px; }
 .kpi .lab {
   font-family: var(--font-regular);
@@ -273,8 +258,17 @@ button:disabled { opacity: 0.4; cursor: not-allowed; }
   margin-top: 4px;
 }
 
-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-table th, table td { border-bottom: 1px solid var(--line); padding: 8px 0; text-align: left; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+table th,
+table td {
+  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+  text-align: left;
+}
 table th {
   font-family: var(--font-semibold);
   font-weight: 600;
@@ -289,15 +283,22 @@ table td {
 }
 
 .note {
-  font-family: var(--font-italic);
+  font-family: var(--font-regular);
   font-style: italic;
-  font-weight: 400;
   font-size: 14px;
   color: var(--muted);
   line-height: 1.5;
 }
 
+/* Small-height safety margin */
+@media (max-height: 700px) {
+  .wrap { margin: 6vh auto; }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .welcome, #wizard, .step { transition: none !important; transform: none !important; }
+  .welcome, #wizard, .step {
+    transition: none !important;
+    transform: none !important;
+  }
 }
