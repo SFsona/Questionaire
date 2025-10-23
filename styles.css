@@ -614,3 +614,28 @@ html, body {
   font-style: normal;
   letter-spacing: 0.02em;
 }
+/* ===========================================
+   FOOTER BUTTON HOVER ENHANCEMENTS
+   =========================================== */
+
+/* NEXT BUTTON — subtle brightness + lift */
+.footer #btnNext:hover {
+  background-color: rgba(255, 255, 255, 0.15);   /* soft glow effect */
+  border-color: rgba(255, 255, 255, 0.4);       /* slightly clearer edge */
+  transform: translateY(-2px);
+  transition: all 0.35s ease;
+}
+
+/* BACK BUTTON — lighter, minimal movement */
+.footer #btnBack:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  transition: all 0.35s ease;
+}
+
+/* Active state (click) for both */
+.footer button:active {
+  transform: translateY(0);
+  opacity: 0.9;
+}
