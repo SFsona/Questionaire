@@ -159,10 +159,9 @@ html, body {
   margin-bottom: 20px;
 }
 .q-help-small {
-  font-size: 0.85em;
-  color: rgba(255, 255, 255, 0.7); /* subtle, elegant white-on-dark tone */
-  font-weight: 300;                 /* uses your Plantin Light variant */
-  line-height: 1.4;
+  font-family: var(--font-light);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7); /* subtle, elegant white-on-dark tone */                
 }
 
 /* Inputs / options */
