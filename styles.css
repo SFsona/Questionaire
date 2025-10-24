@@ -162,8 +162,8 @@ html, body {
   display: block;                  /* ✅ Forces it onto its own line */
   width: 100%;                     /* Keeps alignment consistent with the input above */
   font-family: var(--font-light);
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.7); /* subtle, elegant white-on-dark tone */
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6); /* subtle, elegant white-on-dark tone */
   margin-top: 8px;
 }
 
