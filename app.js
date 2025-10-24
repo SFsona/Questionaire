@@ -134,20 +134,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var cinemaLevel = radioVal("cinemaLevel") || "none";
 
-    // Infrastructure
-   var infra = Math.round(m2 * (COSTS.infrastructure.perSqm || 0));
+    // Infrastructure (guarded)
+    var infraRate = (COSTS.infrastructure && typeof COSTS.infrastructure.perSqm === "number")
+      ? COSTS.infrastructure.perSqm
+      : 0;
 
-   // --- Add plaster-in WiFi housing allowance if selected ---
-   const apHousing = qs("#apHidden").checked ? "hidden" : "standard";
-     var aps = Math.max(1, Math.ceil(m2 / (DEFAULTS.apPerSqm || 110)));
-     var apHiddenCost = (COSTS.connectivity["ap-hidden"] || 0);
-     infra += Math.round(aps * apHiddenCost);
-   }
+    var infra = Math.round(m2 * infraRate);
+
+    // Add plaster-in WiFi housing allowance if selected (supports checkbox or radio)
+    var includeHidden = false;
+
+    // If you use a checkbox with id="apHidden"
+    var apHiddenEl = qs("#apHidden");
+    if (apHiddenEl) {
+      includeHidden = !!apHiddenEl.checked;
+    }
+
+    if (includeHidden) {
+    var apsForInfra = Math.max(1, Math.ceil(m2 / (DEFAULTS.apPerSqm || 110)));
+    var apHiddenCost = (COSTS.connectivity && typeof COSTS.connectivity["ap-hidden"] === "number")
+      ? COSTS.connectivity["ap-hidden"]
+      : 0;
+    infra += Math.round(apsForInfra * apHiddenCost);
+    }
 
     // Connectivity
     var aps = Math.max(1, Math.ceil(m2 / (DEFAULTS.apPerSqm || 110)));
-    var switchCost = sqft <= 10000 ? COSTS.connectivity.switchSmall : COSTS.connectivity.switchLarge;
-    var conn = Math.round((COSTS.connectivity.router || 0) + switchCost + aps * (COSTS.connectivity.ap || 0));
+    var switchCost = sqft <= 10000
+      ? (COSTS.connectivity.switchSmall || 0)
+      : (COSTS.connectivity.switchLarge || 0);
+    var apUnit = (COSTS.connectivity && typeof COSTS.connectivity.ap === "number")
+      ? COSTS.connectivity.ap
+      : 0;
+
+    var conn = Math.round(
+      (COSTS.connectivity.router || 0) +
+      switchCost +
+      aps * apUnit
+    );
 
     // Access & Intercom
     var access = Math.round(entryAudio * (COSTS.access.audioOnly || 0) + entryAV * (COSTS.access.audioVideo || 0));
