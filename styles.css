@@ -162,9 +162,9 @@ html, body {
   display: block;                  /* ✅ Forces it onto its own line */
   width: 100%;                     /* Keeps alignment consistent with the input above */
   font-family: var(--font-light);
-  font-size: 11px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.6); /* subtle, elegant white-on-dark tone */
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 /* Inputs / options */
