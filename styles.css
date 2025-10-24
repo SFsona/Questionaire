@@ -158,7 +158,10 @@ html, body {
   margin-top: 8px;
   margin-bottom: 20px;
 }
-
+.q-help-small {
+  font-size: 0.75em;
+  opacity: 0.9; /* optional – slightly lighter look */
+}
 /* Inputs / options */
 .field {
   display: inline-flex;
