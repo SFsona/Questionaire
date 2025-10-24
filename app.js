@@ -138,8 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
    var infra = Math.round(m2 * (COSTS.infrastructure.perSqm || 0));
 
    // --- Add plaster-in WiFi housing allowance if selected ---
-   var apHousing = radioVal("apHousing") || "standard";
-   if (apHousing === "hidden") {
+   const apHousing = qs("#apHidden").checked ? "hidden" : "standard";
      var aps = Math.max(1, Math.ceil(m2 / (DEFAULTS.apPerSqm || 110)));
      var apHiddenCost = (COSTS.connectivity["ap-hidden"] || 0);
      infra += Math.round(aps * apHiddenCost);
