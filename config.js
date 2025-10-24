@@ -23,10 +23,10 @@ window.SONA_COST_MODEL = {
   /* Connectivity */
   connectivity: {
     router: 2000,
-    switchSmall: 1000,   // ≤ 10,000 ft²
-    switchLarge: 2000,   // > 10,000 ft²
+    switchSmall: 2000,   // ≤ 10,000 ft²
+    switchLarge: 4000,   // > 10,000 ft²
     ap: 400,             // allowance for AP (per unit)
-    "ap-hidden": 400     // allowance for AP housing (per unit)
+    "ap-hidden": 350     // allowance for AP housing (per unit)
   },
 
   /* Access & Intercom */
@@ -40,16 +40,16 @@ window.SONA_COST_MODEL = {
     keypadCost: 500,
     keypadRules: {
       baseBySqft: [
-        { maxSqft: 10000, qty: 9 },
-        { maxSqft: 20000, qty: 15 },
+        { maxSqft: 9000, qty: 9 },
+        { maxSqft: 15000, qty: 15 },
         { maxSqft: 999999, qty: 22 }
       ],
       perBedroom: 4,   // per bedroom set (ENTIRE scope)
       perLeisure: 1    // per leisure/entertaining room
     },
     equipmentBySqft: [
-      { maxSqft: 10000, cost: 9000 },
-      { maxSqft: 20000, cost: 13000 },
+      { maxSqft: 9000, cost: 9000 },
+      { maxSqft: 15000, cost: 13000 },
       { maxSqft: 999999, cost: 18000 }
     ],
     processor: 3000,
@@ -66,7 +66,7 @@ window.SONA_COST_MODEL = {
 
   /* Shading */
   shading: {
-    perBlind: 1500
+    perBlind: 1520
   },
 
   /* Audio */
@@ -74,22 +74,22 @@ window.SONA_COST_MODEL = {
     standard: 1700,
     advanced: 3000,
     invisible: 4000,
-    surround: 4000
+    surround: 5700
   },
 
   /* Video */
   video: {
-    upTo55: 1500,
-    over65: 2500,
+    upTo55: 1800,
+    over65: 3000,
     localPerZone: 400,
     centralCore: 6000,
-    centralPerZoneAdd: 1500
+    centralPerZoneAdd: 1700
   },
 
   /* Cinema / Media */
   cinema: {
-    entry: 25000,
-    mid: 70000,
-    high: 150000
+    entry: 25400,
+    mid: 75300,
+    high: 102400
   }
 };
