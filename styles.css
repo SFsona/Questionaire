@@ -160,7 +160,7 @@ html, body {
 }
 .q-help-small {
   font-family: var(--font-light);
-  font-size: 10px;
+  font-size: 8px;
   color: rgba(255, 255, 255, 0.7); /* subtle, elegant white-on-dark tone */                
 }
 
