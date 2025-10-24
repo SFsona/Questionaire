@@ -233,36 +233,49 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Summary
-  function showSummary(){
-    var r = estimate();
-    var wiz = qs("#wizard"); if (wiz) wiz.style.display = "none";
-    var sum = qs("#summary"); if (sum) sum.style.display = "block";
+function showSummary() {
+  var r = estimate();
+  var wiz = qs("#wizard"); if (wiz) wiz.style.display = "none";
+  var sum = qs("#summary"); if (sum) sum.style.display = "block";
 
-    var lowEl = qs("#kpiLow");  if (lowEl)  lowEl.textContent  = fmtGBP(r.low);
-    var highEl= qs("#kpiHigh"); if (highEl) highEl.textContent = fmtGBP(r.high);
+  var lowEl = qs("#kpiLow");  if (lowEl)  lowEl.textContent  = fmtGBP(r.low);
+  var highEl = qs("#kpiHigh"); if (highEl) highEl.textContent = fmtGBP(r.high);
 
-    var tbody = qs("#tbodySys");
-    if (tbody){
-      tbody.innerHTML = "";
-      for (var i=0;i<r.systems.length;i++){
-        var s = r.systems[i];
-        var tr = document.createElement("tr");
-        var td1 = document.createElement("td");
-        var td2 = document.createElement("td");
+  var tbody = qs("#tbodySys");
+  if (tbody) {
+    tbody.innerHTML = "";
+
+    // 🔹 Check if plaster-in housings were selected
+    var apHousing = radioVal("apHousing") || "standard";
+    var includeNote = (apHousing === "hidden");
+
+    for (var i = 0; i < r.systems.length; i++) {
+      var s = r.systems[i];
+      var tr = document.createElement("tr");
+      var td1 = document.createElement("td");
+      var td2 = document.createElement("td");
+
+      // 🔹 If Infrastructure and plaster-in selected, append note
+      if (s.label === "Infrastructure" && includeNote) {
+        td1.innerHTML = `${s.label} <span style="opacity:0.8; font-style:italic;">(incl. plaster-in WiFi housings)</span>`;
+      } else {
         td1.textContent = s.label;
-        td2.textContent = fmtGBP(s.cost);
-        tr.appendChild(td1); tr.appendChild(td2);
-        tbody.appendChild(tr);
       }
-    }
 
-    var be = qs("#btnExport");
-    var bp = qs("#btnPrint");
-    var br = qs("#btnRestart");
-    if (be) be.onclick = function(){ exportCSV(r); };
-    if (bp) bp.onclick = function(){ window.print(); };
-    if (br) br.onclick = function(){ window.location.reload(); };
+      td2.textContent = fmtGBP(s.cost);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tbody.appendChild(tr);
+    }
   }
+
+  var be = qs("#btnExport");
+  var bp = qs("#btnPrint");
+  var br = qs("#btnRestart");
+  if (be) be.onclick = function () { exportCSV(r); };
+  if (bp) bp.onclick = function () { window.print(); };
+  if (br) br.onclick = function () { window.location.reload(); };
+}
 
   // CSV export
   function exportCSV(r){
