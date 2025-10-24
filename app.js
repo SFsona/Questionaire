@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function validateStep(){
     if (stepIndex === 0 && m2FromInput() < 20) return "Please enter property size (≥ 20 m²).";
-    if (stepIndex === 1 && valNum("bedrooms", 0) < 1) return "Please enter the number of bedrooms.";
+    if (stepIndex === 2 && valNum("bedrooms", 0) < 1) return "Please enter the number of bedrooms.";
     return null;
     }
 
