@@ -105,6 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+   // Use the loaded model as COSTS (what the rest of the code expects)
+   const COSTS = window.SONA_COST_MODEL || {};
+
+   
   // Estimate engine
   function estimate(){
     var m2      = m2FromInput();
