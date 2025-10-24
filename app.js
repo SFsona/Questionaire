@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var DEFAULTS = window.SONA_DEFAULTS || {};
   var COSTS    = window.SONA_COST_MODEL || {};
 
+
   // Helpers
   function qs(s){ return document.querySelector(s); }
   function qsa(s){ return Array.prototype.slice.call(document.querySelectorAll(s)); }
@@ -105,11 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-   // Use the loaded model as COSTS (what the rest of the code expects)
-   const COSTS = window.SONA_COST_MODEL || {};
-
-   
-  // Estimate engine
+   // Estimate engine
   function estimate(){
     var m2      = m2FromInput();
     var sqft    = m2 * 10.7639;
