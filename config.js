@@ -25,7 +25,7 @@ window.SONA_COST_MODEL = {
     router: 2000,
     switchSmall: 1000,   // ≤ 10,000 ft²
     switchLarge: 2000,   // > 10,000 ft²
-    ap: 400              // allowance for AP (per unit)
+    ap: 400,             // allowance for AP (per unit)
     "ap-hidden": 400     // allowance for AP housing (per unit)
   },
 
