@@ -404,9 +404,11 @@ table td {
 
 .welcome #btnStart {
   opacity: 0;
-  transform: translateY(8px);
-  animation: btnFadeIn 2.5s ease forwards;
-  animation-delay: 4.0s; /* fades in last */
+  transform: translateY(8px) scale(1);
+  animation:
+    btnFadeIn 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+    btnPulse 1.8s ease-in-out 6.6s 1; /* pulse once after fade-in */
+  animation-delay: 4.0s, 6.6s; /* fade starts at 4s, pulse starts 6.6s */
 }
 
 /* Keyframes for smooth motion */
@@ -429,10 +431,17 @@ table td {
 }
 
 @keyframes btnFadeIn {
-  0% { opacity: 0; transform: translateY(8px); }
-  50% { opacity: 0.6; transform: translateY(0); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% { opacity: 0; transform: translateY(8px) scale(1); }
+  50% { opacity: 0.6; transform: translateY(0) scale(1); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+@keyframes btnPulse {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(0) scale(1.04); }
+  100% { transform: translateY(0) scale(1); }
+}
+
 
 /* Responsive logo sizing */
 @media (max-width: 600px) {
