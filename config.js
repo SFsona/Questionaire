@@ -5,7 +5,7 @@
 
 window.SONA_DEFAULTS = {
   currency: "GBP",
-  apPerSqm: 110,          // Wi-Fi access point density (m² per AP)
+  apPerSqm: 120,          // Wi-Fi access point density (m² per AP)
   powerPct: 0.06,         // 6% containment & power management
   lowAdjPct: 0.0,         // Low estimate adjustment (relative to base)
   highAdjPct: 0.10        // High estimate adjustment (+10%)
@@ -17,7 +17,7 @@ window.SONA_DEFAULTS = {
 window.SONA_COST_MODEL = {
   /* Infrastructure */
   infrastructure: {
-    perSqm: 22
+    perSqm: 20
   },
 
   /* Connectivity */
