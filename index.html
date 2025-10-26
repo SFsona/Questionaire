@@ -63,8 +63,13 @@
                             These units are relatively discrete &amp; we try to locate them in positions where they are not obviously on show, but for the most discrete installation we can include plaster-in housings so that they are completely invisible, yet still provide the most complete coverage.<br/><br/>
                             Please select whether you would like to include plaster-in WiFi housings.</div>
 
-        <div class="opt-list" role="group" aria-label="Plaster-in WiFi housings">
-        <label class="pill"><input type="checkbox" id="apHidden" value="hidden" /> Include Plaster-in WiFi Housings</label>
+        <div class="opt-list opt-inline" role="radiogroup" aria-label="Include plaster-in WiFi housings">
+        
+        <!-- YES = plaster-in (value 'hidden' to match calculations) -->
+        <label class="opt"><input type="radio" name="apHousing" value="hidden">Yes — include plaster-in housings</label>
+
+        <!-- NO = standard -->
+        <label class="opt"><input type="radio" name="apHousing" value="standard" checked>No — standard ceiling access points</label>
         </div>
       </div>
 
@@ -79,10 +84,9 @@
       <!-- Step 4 -->
       <div class="step" data-step="4">
         <div class="q-title">LIGHTING CONTROL<br/><i>additional entertaining &amp; living spaces</i></div>
-        <div class="q-help"><br/>Beyond your main living spaces how many other entertaining or leisure areas are there in the property?</div>
+        <div class="q-help"><br/>Beyond your main living spaces (e.g. kitchen, living room, dining room) how many other entertaining or leisure areas are there in the property?</div>
         <div class="field"><input type="number" id="leisure" min="0" step="1" placeholder="e.g. 2"></div>
-        <div class="q-help-small">Main living space examples: kitchen, living room, dining room<br/>
-                                  Other entertaining or leisure space examples: gym, pool, spa, games room, bar</div>
+        <div class="q-help-small">Examples of these types of spaces would be; gym, bar, games room, pool.</div>
       </div>
 
       <!-- Step 5 -->
@@ -97,24 +101,26 @@
         <div class="q-title">ACCESS<br/><i>audio &amp; video intercom entry</i></div>
         <div class="q-help"><br/>For main gates, and primary entrances, we recommend audio &amp; video points so that you can both communicate with and see callers.<br/><br/>How many audio &amp; video intercom locations you would like.</div>
         <div class="field"><input type="number" id="entryAV" min="0" step="1" value="1"></div>
+        <div class="q-help-small">If you'd like a video entry panel at your gates &amp; one at the front door, you'd enter 2 here.</div>
       </div>
 
       <!-- Step 7 -->
       <div class="step" data-step="7">
         <div class="q-title">Lighting Control</div>
         <div class="q-help"><br/>If you've toured the SONA Studio, then you've witnessed how lighting control can transform spaces and provide both practical function and incredible mood and atmosphere.<br/><br/>
-                                 Please tell us if you don't want any lighting control in your home, if you'd like lighting control across the entire property, or if you'd just like it in your main living &amp; entertaining spaces plus master bedroom suite.</div>
+                                 For initial budget purposes, we suggest you consider if you'd like to have lighting control throughout your entire home, just in the main living, entertaining and master bedroom suite spaces; or if you'd not like to include for any lighting control at this stage.</div>
         <div class="opt-list">
-          <label class="opt"><input type="radio" name="lightingScope" value="none"> Not required</label>
-          <label class="opt"><input type="radio" name="lightingScope" value="entire" checked> Throughout the entire property</label>
+          <label class="opt"><input type="checkbox" name="lightingScope" value="entire" checked> Throughout the entire property</label>
           <label class="opt"><input type="radio" name="lightingScope" value="main"> Main living &amp; spaces &amp; master suite</label>
+          <label class="opt"><input type="radio" name="lightingScope" value="none"> Not required</label>
         </div>
       </div>
 
       <!-- Step 8 -->
       <div class="step" data-step="8">
         <div class="q-title">High Quality Architectural Lighting</div>
-        <div class="q-help"><br/>How many rooms would you like to include?</div>
+        <div class="q-help"><br/><br/>We believe that beautiful homes &amp; spaces should be beautifully lit, with high quality lighting that makes every inch of your home look &amp; feel incredible.<br/><br/>
+                                 </div>
         <div class="field"><input type="number" id="archFittingsRooms" min="0" step="1" value="0"></div>
         <label class="opt" style="margin-top:10px; display:inline-flex;">
           <input type="checkbox" id="archAll"> All rooms (we’ll estimate)
