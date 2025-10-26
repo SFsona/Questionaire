@@ -260,41 +260,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Summary
 function showSummary() {
+  // 1) Get numbers
   var r = estimate();
+
+  // 2) Swap screens
   var wiz = qs("#wizard"); if (wiz) wiz.style.display = "none";
   var sum = qs("#summary"); if (sum) sum.style.display = "block";
 
-  var lowEl = qs("#kpiLow");  if (lowEl)  lowEl.textContent  = fmtGBP(r.low);
+  // 3) Totals (Low/High)
+  var lowEl  = qs("#kpiLow");  if (lowEl)  lowEl.textContent  = fmtGBP(r.low);
   var highEl = qs("#kpiHigh"); if (highEl) highEl.textContent = fmtGBP(r.high);
 
-  var tbody = qs("#tbodySys");
-  if (tbody) {
-    tbody.innerHTML = "";
+  // 4) Find the table body robustly
+  //    Supports either <tbody id="tbodySys"> or <table id="tblSys"><tbody>...</tbody></table>
+  var tbody = qs("#tbodySys") || qs("#tblSys tbody");
+  if (!tbody) {
+    console.warn("Summary table body not found. Expected #tbodySys or #tblSys tbody.");
+    return;
+  }
 
-    // includeHidden is true if either the checkbox is checked OR the radio says 'hidden'
-    var includeHidden =
+  // 5) Clear and rebuild rows
+  tbody.innerHTML = "";
+
+  // Include note if plaster-in housings were selected (checkbox or radio)
+  var includeHidden =
     (qs("#apHidden") && qs("#apHidden").checked) ||
     (radioVal("apHousing") === "hidden");
 
-    for (var i = 0; i < r.systems.length; i++) {
-      var s = r.systems[i];
-      var tr = document.createElement("tr");
-      var td1 = document.createElement("td");
-      var td2 = document.createElement("td");
+  r.systems.forEach(function(sys) {
+    var tr  = document.createElement("tr");
+    var td1 = document.createElement("td");
+    var td2 = document.createElement("td");
 
-      // 🔹 If Infrastructure and plaster-in selected, append note
-      if (s.label === "Infrastructure" && includeNote) {
-        td1.innerHTML = `${s.label} <span style="opacity:0.8; font-style:italic;">(incl. plaster-in WiFi housings)</span>`;
-      } else {
-        td1.textContent = s.label;
-      }
-
-      td2.textContent = fmtGBP(s.cost);
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tbody.appendChild(tr);
+    // Add note to Infrastructure label if needed
+    if (sys.label === "Infrastructure" && includeHidden) {
+      td1.innerHTML = sys.label + " <span style='opacity:0.8; font-style:italic;'>(incl. plaster-in WiFi housings)</span>";
+    } else {
+      td1.textContent = sys.label;
     }
-  }
+
+    td2.textContent = fmtGBP(sys.cost);
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tbody.appendChild(tr);
+  });
+}
+
 
   var be = qs("#btnExport");
   var bp = qs("#btnPrint");
