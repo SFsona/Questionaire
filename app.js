@@ -141,8 +141,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var infra = Math.round(m2 * infraRate);
 
-    // Add plaster-in WiFi housing allowance if selected (supports checkbox or radio)
-    var includeHidden = false;
+    // includeHidden is true if either the checkbox is checked OR the radio says 'hidden'
+    var includeHidden =
+    (qs("#apHidden") && qs("#apHidden").checked) ||
+    (radioVal("apHousing") === "hidden");
 
     // If you use a checkbox with id="apHidden"
     var apHiddenEl = qs("#apHidden");
@@ -269,9 +271,10 @@ function showSummary() {
   if (tbody) {
     tbody.innerHTML = "";
 
-    // 🔹 Check if plaster-in housings were selected
-    var apHousing = radioVal("apHousing") || "standard";
-    var includeNote = (apHousing === "hidden");
+    // includeHidden is true if either the checkbox is checked OR the radio says 'hidden'
+    var includeHidden =
+    (qs("#apHidden") && qs("#apHidden").checked) ||
+    (radioVal("apHousing") === "hidden");
 
     for (var i = 0; i < r.systems.length; i++) {
       var s = r.systems[i];
