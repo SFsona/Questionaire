@@ -402,6 +402,13 @@ table td {
   animation-delay: 2.8s; /* comes in last for layering effect */
 }
 
+.welcome #btnStart {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: btnFadeIn 2.5s ease forwards;
+  animation-delay: 4.0s; /* fades in last */
+}
+
 /* Keyframes for smooth motion */
 @keyframes logoFadeIn {
   0% { opacity: 0; transform: translateY(-10px) scale(0.98); }
@@ -419,6 +426,12 @@ table td {
   0% { opacity: 0; transform: translateY(8px); }
   40% { opacity: 0.6; transform: translateY(0); }
   100% { opacity: 0.9; transform: translateY(0); }
+}
+
+@keyframes btnFadeIn {
+  0% { opacity: 0; transform: translateY(8px); }
+  50% { opacity: 0.6; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive logo sizing */
