@@ -272,7 +272,6 @@ function showSummary() {
   var highEl = qs("#kpiHigh"); if (highEl) highEl.textContent = fmtGBP(r.high);
 
   // 4) Find the table body robustly
-  //    Supports either <tbody id="tbodySys"> or <table id="tblSys"><tbody>...</tbody></table>
   var tbody = qs("#tbodySys") || qs("#tblSys tbody");
   if (!tbody) {
     console.warn("Summary table body not found. Expected #tbodySys or #tblSys tbody.");
@@ -292,7 +291,6 @@ function showSummary() {
     var td1 = document.createElement("td");
     var td2 = document.createElement("td");
 
-    // Add note to Infrastructure label if needed
     if (sys.label === "Infrastructure" && includeHidden) {
       td1.innerHTML = sys.label + " <span style='opacity:0.8; font-style:italic;'>(incl. plaster-in WiFi housings)</span>";
     } else {
@@ -300,46 +298,44 @@ function showSummary() {
     }
 
     td2.textContent = fmtGBP(sys.cost);
-
     tr.appendChild(td1);
     tr.appendChild(td2);
     tbody.appendChild(tr);
   });
-}
 
-
+  // 6) Wire actions (must be inside showSummary so 'r' is in scope)
   var be = qs("#btnExport");
   var bp = qs("#btnPrint");
   var br = qs("#btnRestart");
-  if (be) be.onclick = function () { exportCSV(r); };
-  if (bp) bp.onclick = function () { window.print(); };
-  if (br) br.onclick = function () { window.location.reload(); };
+  if (be) be.onclick = function(){ exportCSV(r); };
+  if (bp) bp.onclick = function(){ window.print(); };
+  if (br) br.onclick = function(){ window.location.reload(); };
 }
 
-  // CSV export
-  function exportCSV(r){
-    var rows = [["System","Estimate (ex VAT)"]];
-    for (var i=0;i<r.systems.length;i++){
-      rows.push([r.systems[i].label, r.systems[i].cost]);
-    }
-    rows.push(["Base", r.base]);
-    rows.push(["Low estimate", r.low]);
-    rows.push(["High estimate", r.high]);
-
-    var csv = "";
-    for (var rix=0; rix<rows.length; rix++){
-      var row = rows[rix];
-      for (var c=0;c<row.length;c++){
-        var cell = String(row[c]).replace(/"/g,'""');
-        row[c] = '"' + cell + '"';
-      }
-      csv += row.join(",") + "\n";
-    }
-    var blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = url; a.download = "sona-budget-estimate.csv";
-    document.body.appendChild(a); a.click(); a.remove();
-    URL.revokeObjectURL(url);
+// CSV export
+function exportCSV(r){
+  var rows = [["System","Estimate (ex VAT)"]];
+  for (var i=0;i<r.systems.length;i++){
+    rows.push([r.systems[i].label, r.systems[i].cost]);
   }
-});
+  rows.push(["Base", r.base]);
+  rows.push(["Low estimate", r.low]);
+  rows.push(["High estimate", r.high]);
+
+  var csv = "";
+  for (var rix=0; rix<rows.length; rix++){
+    var row = rows[rix];
+    for (var c=0;c<row.length;c++){
+      var cell = String(row[c]).replace(/"/g,'""');
+      row[c] = '"' + cell + '"';
+    }
+    csv += row.join(",") + "\n";
+  }
+  var blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url; a.download = "sona-budget-estimate.csv";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+}); // ← closes DOMContentLoaded
