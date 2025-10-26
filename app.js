@@ -58,15 +58,24 @@ document.addEventListener("DOMContentLoaded", function () {
     var sb = qs("#stepBadge"); if (sb) sb.textContent = txt;
     var bt = qs("#bartext");  if (bt) bt.textContent = txt;
   }
-  function showStep(i){
-    for (var j=0;j<steps.length;j++){
-      if (steps[j].classList) steps[j].classList.toggle("active", j===i);
+  function showStep(i) {
+  steps.forEach(function(step, j) {
+    if (step.classList.contains("active") && j !== i) {
+      step.classList.remove("active");
+      step.classList.add("fade-out");
+      setTimeout(function() { step.classList.remove("fade-out"); }, 600);
     }
-    var back = qs("#btnBack"); var next = qs("#btnNext");
-    if (back) back.disabled = (i===0);
-    if (next) next.textContent = (i === steps.length - 1) ? "See Estimate" : "Next";
-    setStepBadge();
-  }
+  });
+  
+  steps[i].classList.add("active");
+
+  var back = qs("#btnBack");
+  var next = qs("#btnNext");
+  if (back) back.disabled = (i === 0);
+  if (next) next.textContent = (i === steps.length - 1) ? "See Estimate" : "Next";
+  setStepBadge();
+}
+
   showStep(stepIndex);
 
   function validateStep(){
